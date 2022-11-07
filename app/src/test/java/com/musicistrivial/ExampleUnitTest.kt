@@ -1,4 +1,4 @@
-package com.group.musicistrivial
+package com.musicistrivial
 
 import org.junit.Test
 
