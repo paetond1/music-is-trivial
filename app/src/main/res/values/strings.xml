@@ -4,5 +4,6 @@
     <!--  Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
     <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>
-    <string name="spotify_top_tracks_path">/top-tracks?market=US</string>
+    <string name="spotify_top_tracks_path">/top-tracks?market=CA</string>
+    <string name="spotify_search_url">https://api.spotify.com/v1/search</string>
 </resources>
