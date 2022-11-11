@@ -7,12 +7,87 @@
     tools:context=".activities.MainActivity">
 
     <TextView
+        android:id="@+id/todays_artist_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        android:text="Today's Artist"
+        app:layout_constraintBottom_toTopOf="@+id/artist_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002" />
+
+    <ImageView
+        android:id="@+id/artist_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/artist_name"
+        app:layout_constraintEnd_toEndOf="@+id/todays_artist_message"
+        app:layout_constraintStart_toStartOf="@+id/todays_artist_message"
+        app:layout_constraintTop_toBottomOf="@+id/todays_artist_message"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Artist Name"
+        app:layout_constraintEnd_toEndOf="@+id/artist_image"
+        app:layout_constraintStart_toStartOf="@+id/artist_image"
+        app:layout_constraintTop_toBottomOf="@+id/artist_image" />
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Play!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artist_name" />
+
+    <Button
+        android:id="@+id/button_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Instructions"
+        app:layout_constraintEnd_toEndOf="@+id/button_play"
+        app:layout_constraintStart_toStartOf="@+id/button_play"
+        app:layout_constraintTop_toBottomOf="@+id/button_play" />
+
+    <Button
+        android:id="@+id/button_statistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Statistics"
+        app:layout_constraintEnd_toEndOf="@+id/button_instructions"
+        app:layout_constraintStart_toStartOf="@+id/button_instructions"
+        app:layout_constraintTop_toBottomOf="@+id/button_instructions" />
+
+    <Button
+        android:id="@+id/button_login_with_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Login with Google"
+        app:layout_constraintEnd_toEndOf="@+id/button_statistics"
+        app:layout_constraintStart_toStartOf="@+id/button_statistics"
+        app:layout_constraintTop_toBottomOf="@+id/button_statistics" />
+
+    <TextView
+        android:id="@+id/game_streak_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="Current Streak: 5 days!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
