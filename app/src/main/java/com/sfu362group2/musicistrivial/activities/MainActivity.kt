@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (viewModel.date.value != LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)) {
-            viewModel.setDate()
             viewModel.spotifyCalls(spotify, queue)
         }
     }
