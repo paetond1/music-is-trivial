@@ -6,22 +6,17 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.sfu362group2.musicistrivial.R
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.HashMap
-import kotlin.random.Random
 
 private const val TAG = "DEBUG: Spotify API"
 
 class Spotify(context: Context) {
     private val context: Context
-    private val clientId: String
-    private val clientSecret: String
+    private val clientCredentials: String
 
     init {
         System.loadLibrary("keys")
         this.context = context
-        this.clientId = getSpotifyClientId()
-        this.clientSecret = getSpotifyClientSecret()
+        this.clientCredentials = getSpotifyCredentials()
     }
 
     fun tokenRequest(onSuccess: (jsonObj: JSONObject) -> Unit): JsonObjectRequest {
@@ -41,10 +36,9 @@ class Spotify(context: Context) {
                 Log.e(TAG, "tokenRequest failure message: ${error.message}")
             }) {
             override fun getHeaders(): Map<String, String> {
-                val idSecret =
-                    "$clientId:$clientSecret"
                 val authHeaderVal =
-                    "Basic " + Base64.getEncoder().encodeToString(idSecret.toByteArray())
+                    "Basic $clientCredentials"
+                Log.i(TAG, authHeaderVal)
                 val headers = HashMap<String, String>()
                 headers["Authorization"] = authHeaderVal
                 headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -114,7 +108,6 @@ class Spotify(context: Context) {
         token: String, char: Char,
         onSuccess: (jsonObj: JSONObject) -> Unit
     ): JsonObjectRequest {
-        var num = Random(System.currentTimeMillis()).nextInt(0, 20)
         val url = "https://api.spotify.com/v1/search?q=$char%25&type=artist&market=CA&limit=20"
         val request = object : JsonObjectRequest(
             Method.GET,
@@ -145,7 +138,6 @@ class Spotify(context: Context) {
     }
 
 
-    private external fun getSpotifyClientSecret(): String
+    private external fun getSpotifyCredentials(): String
 
-    private external fun getSpotifyClientId(): String
 }
