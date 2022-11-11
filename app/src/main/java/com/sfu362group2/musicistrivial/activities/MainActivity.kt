@@ -1,17 +1,20 @@
 package com.sfu362group2.musicistrivial.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
+import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
-import kotlin.random.Random
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var queue: RequestQueue
     private lateinit var spotify: Spotify
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,37 +50,29 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
         }
 
-        spotify = Spotify(this)
-
-
         artistImg = findViewById(R.id.artist_image)
         artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
-        // TODO: update with API fetched artist
+
+        spotify = Spotify(this)
         queue = Volley.newRequestQueue(this)
-        spotifyCalls()
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel.artistName.observe(this) {
+            artistName.text = viewModel.artistName.value
+        }
+        viewModel.artistImgUrl.observe(this) {
+            Picasso.get()
+                .load(viewModel.artistImgUrl.value)
+                .into(artistImg)
+        }
 
     }
 
-
-    private fun spotifyCalls(){
-        queue.add(spotify.tokenRequest { response ->
-            val token = response.getString("access_token")
-            val str = "ABCDEFGHIJKLMNOPQRSTUV"
-            val char = str.random()
-            queue.add(spotify.randomArtistRequest(token, char){
-                    response ->
-                val randInt = Random(System.currentTimeMillis()).nextInt(0, 20)
-                val id = response.getJSONObject("artists").getJSONArray("items").getJSONObject(randInt).getString("id")
-                queue.add(spotify.artistRequest(token, id){
-                        response ->
-                    artistName.text = response.getString("name")
-                    val imgURL = response.getJSONArray("images").getJSONObject(0).getString("url")
-                    Picasso.get()
-                        .load(imgURL)
-                        .into(artistImg)
-                })
-            })
-        })
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.date.value != LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)) {
+            viewModel.setDate()
+            viewModel.spotifyCalls(spotify, queue)
+        }
     }
 }
