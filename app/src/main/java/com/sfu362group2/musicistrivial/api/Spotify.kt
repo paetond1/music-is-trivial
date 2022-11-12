@@ -38,7 +38,6 @@ class Spotify(context: Context) {
             override fun getHeaders(): Map<String, String> {
                 val authHeaderVal =
                     "Basic $clientCredentials"
-                Log.i(TAG, authHeaderVal)
                 val headers = HashMap<String, String>()
                 headers["Authorization"] = authHeaderVal
                 headers["Content-Type"] = "application/x-www-form-urlencoded"

@@ -14,6 +14,7 @@ class MainViewModel : ViewModel() {
     val artistImgUrl = MutableLiveData<String>()
     val artistName = MutableLiveData<String>()
     val artistId = MutableLiveData<String>()
+    val allSongsInOrder = MutableLiveData<ArrayList<String>>(ArrayList())
 
     private fun setDate() {
         date.value = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)
@@ -21,6 +22,8 @@ class MainViewModel : ViewModel() {
 
     fun spotifyCalls(spotify: Spotify, queue: RequestQueue) {
         setDate()
+        allSongsInOrder.value!!.clear()
+        // Search request spotify for a random artist and get their id
         queue.add(spotify.tokenRequest { response ->
             val token = response.getString("access_token")
             queue.add(
@@ -28,6 +31,7 @@ class MainViewModel : ViewModel() {
                     token,
                     randChar(date.value!!.toInt())
                 ) { response ->
+                    // Request artist name and image
                     val id =
                         response.getJSONObject("artists").getJSONArray("items")
                             .getJSONObject(randInt(date.value!!.toInt()))
@@ -37,6 +41,14 @@ class MainViewModel : ViewModel() {
                         artistName.value = response.getString("name")
                         artistImgUrl.value =
                             response.getJSONArray("images").getJSONObject(0).getString("url")
+                    })
+                    // Request top tracks
+                    queue.add(spotify.topTracksRequest(token, id){
+                        response ->
+                        val tracks = response.getJSONArray("tracks")
+                        for (i in 0..9){
+                            allSongsInOrder.value!!.add(tracks.getJSONObject(i).getString("name"))
+                        }
                     })
                 })
         })

@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         playButton = findViewById(R.id.button_play)
         playButton.setOnClickListener {
             val i = Intent(this, GamePlayActivity::class.java)
+            i.putExtras(gameBundle())
             startActivity(i)
         }
 
@@ -54,8 +54,32 @@ class MainActivity : AppCompatActivity() {
         artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
 
+        initViewModel()
         spotify = Spotify(this)
         queue = Volley.newRequestQueue(this)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.date.value != LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)) {
+            viewModel.spotifyCalls(spotify, queue)
+        }
+    }
+
+    private fun gameBundle(): Bundle {
+        val bundle = Bundle()
+        bundle.putString(getString(R.string.bund_key_artist_name), viewModel.artistName.value)
+        bundle.putString(getString(R.string.bund_key_artist_id), viewModel.artistId.value)
+        bundle.putString(getString(R.string.bund_key_date), viewModel.date.value)
+        bundle.putStringArrayList(
+            getString(R.string.bund_key_all_songs),
+            viewModel.allSongsInOrder.value
+        )
+        return bundle
+    }
+
+    private fun initViewModel() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.artistName.observe(this) {
             artistName.text = viewModel.artistName.value
@@ -64,14 +88,6 @@ class MainActivity : AppCompatActivity() {
             Picasso.get()
                 .load(viewModel.artistImgUrl.value)
                 .into(artistImg)
-        }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (viewModel.date.value != LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)) {
-            viewModel.spotifyCalls(spotify, queue)
         }
     }
 }

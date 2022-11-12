@@ -1,20 +1,20 @@
 package com.sfu362group2.musicistrivial.game_logic
 
-class Game(artistId: String, date: Int, artistName: String, allSongsInOrder: ArrayList<String>) {
-    private val artistId: String
-    private val date: Int
+class Game(date: String, artistName: String, allSongsInOrder: ArrayList<String>) {
+    private val date: String
     private val artistName: String
-    private val allSongsInOrder: ArrayList<String>
+    private val allSongsInOrder: List<String>
+    private val songOptions : List<String>
     private val correctSongs: List<String>
     private var score: Float
-    private var submittedSongs: ArrayList<String>?
+    private var submittedSongs: List<String>?
     private var detailedScore: ArrayList<Float>
 
     init {
-        this.artistId = artistId
         this.date = date
         this.artistName = artistName
         this.allSongsInOrder = allSongsInOrder
+        this.songOptions = allSongsInOrder.shuffled()
         this.correctSongs = allSongsInOrder.subList(0, 5)
         this.score = 0.0f
         this.detailedScore = arrayListOf(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f)
@@ -29,12 +29,8 @@ class Game(artistId: String, date: Int, artistName: String, allSongsInOrder: Arr
         return this.artistName
     }
 
-    fun getArtistId(): String{
-        return this.artistId
-    }
-
     fun getSongOptions(): List<String> {
-        return allSongsInOrder.shuffled()
+        return this.songOptions
     }
 
     fun getSubmittedSongs(submittedSongs: List<String>): List<String> {
@@ -67,7 +63,7 @@ class Game(artistId: String, date: Int, artistName: String, allSongsInOrder: Arr
     }
 
 
-    fun getDate(): Int {
+    fun getDate(): String {
         return this.date
     }
 }
