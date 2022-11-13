@@ -6,6 +6,8 @@ plugins {
 android {
     namespace 'com.sfu362group2.musicistrivial'
     compileSdk 32
+    ndkVersion "25.1.8937393"
+
 
     defaultConfig {
         applicationId "com.sfu362group2.musicistrivial"
