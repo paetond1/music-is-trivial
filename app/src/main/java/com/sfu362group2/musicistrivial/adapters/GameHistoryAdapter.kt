@@ -31,6 +31,7 @@ class GameHistoryAdapter(private val context: Context, private var list: List<Ga
         textView.text = text
         return view
     }
+
     fun replaceList(newList: List<GameHistory>){
         list = newList
     }

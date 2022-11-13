@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GameHistoryDbDao {
-    @Insert fun insertDailyEntry(gameHistory: GameHistory)
+    @Insert
+    fun insertDailyEntry(gameHistory: GameHistory)
 
     @Query("SELECT * FROM history_table")
     fun getAllEntries(): Flow<List<GameHistory>>
@@ -29,7 +30,15 @@ interface GameHistoryDbDao {
     @Query("SELECT MAX(consecutive_days_played) FROM history_table")
     fun getLongestStreak() : LiveData<Int>
 
-    //TODO add total games played
+    @Query ("SELECT SUM(day_score) FROM history_table")
+    fun getTotalScore() : LiveData<Int>
+
     @Query("SELECT COUNT(*) FROM history_table")
-    fun getTotalGamesPlayed() : Int
+    fun getTotalGamesPlayed() : LiveData<Int>
+
+    @Query("SELECT AVG(day_score) FROM history_table")
+    fun getAvgScore() : LiveData<Float>
+
+    @Query("SELECT COUNT(*) FROM history_table WHERE day_score = 0")
+    fun getTotalZeroScoreGames() : LiveData<Int>
 }

@@ -21,6 +21,7 @@ class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
         }
     }
 
+
     fun deleteAllEntries() {
         CoroutineScope(IO).launch{
             gameHistoryDbDao.deleteAllEntries()
@@ -35,8 +36,23 @@ class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
         return gameHistoryDbDao.getCurrentStreak()
     }
 
+    fun getTotalScore() : LiveData<Int> {
+        return gameHistoryDbDao.getTotalScore()
+    }
+
     fun getLongestStreak(): LiveData<Int> {
         return gameHistoryDbDao.getLongestStreak()
     }
 
+    fun getAvgScore() : LiveData<Float> {
+        return gameHistoryDbDao.getAvgScore()
+    }
+
+    fun getTotalGamesPlayed() : LiveData<Int> {
+        return gameHistoryDbDao.getTotalGamesPlayed()
+    }
+
+    fun getTotalZeroScoreGames() : LiveData<Int> {
+        return gameHistoryDbDao.getTotalZeroScoreGames()
+    }
 }
