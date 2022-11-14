@@ -9,8 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseAuth
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
+import com.sfu362group2.musicistrivial.databinding.ActivityMainBinding
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
 import java.time.LocalDateTime
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var queue: RequestQueue
     private lateinit var spotify: Spotify
     private lateinit var viewModel: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,14 @@ class MainActivity : AppCompatActivity() {
             val i = Intent(this, StatisticsActivity::class.java)
             startActivity(i)
         }
+
+        //google
+        loginButton = findViewById(R.id.button_login_with_google)
+        loginButton.setOnClickListener{
+            val i = Intent(this, SignInActivity::class.java)
+            startActivity(i)
+        }
+        //end google
 
         artistImg = findViewById(R.id.artist_image)
         artistImg.setImageResource(R.mipmap.ic_launcher)

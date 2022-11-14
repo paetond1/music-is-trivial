@@ -16,6 +16,20 @@
         android:theme="@style/Theme.MusicIsTrivial"
         tools:targetApi="31">
         <activity
+            android:name=".activities.GoogleSignInActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.SignInActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.GameResultActivity"
             android:exported="false">
             <meta-data

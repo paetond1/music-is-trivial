@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "594916045213",
+    "project_id": "cmpt362-music-is-trivial",
+    "storage_bucket": "cmpt362-music-is-trivial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594916045213:android:c3dc2330569407942ebf74",
+        "android_client_info": {
+          "package_name": "com.sfu362group2.musicistrivial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594916045213-5plljgf61mrq3gcotnd6ftatcpcc20do.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQcNWXrkyTabQs_XDuoY3vLVyN9Bw-4gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594916045213-5plljgf61mrq3gcotnd6ftatcpcc20do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
