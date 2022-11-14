@@ -36,7 +36,7 @@ class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
         return gameHistoryDbDao.getCurrentStreak()
     }
 
-    fun getTotalScore() : LiveData<Int> {
+    fun getTotalScore() : LiveData<Float> {
         return gameHistoryDbDao.getTotalScore()
     }
 

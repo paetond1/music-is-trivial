@@ -10,7 +10,7 @@ class GameHistory (
     var date: Long? = null,
 
     @ColumnInfo(name =  "day_score")
-    var score: Int = 0,
+    var score: Float = 0.0f,
 
     @ColumnInfo(name = "consecutive_days_played")
     var streak: Int = 0

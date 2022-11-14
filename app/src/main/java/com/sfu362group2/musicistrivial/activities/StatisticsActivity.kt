@@ -53,7 +53,7 @@ class StatisticsActivity : AppCompatActivity() {
         winButton.setOnClickListener {
             var entry = GameHistory()
             entry.date = getCurrentDateTimeAsLong()
-            entry.score = 3
+            entry.score = 2.5f
             var count = 0
             gameHistoryViewModel.getCurrentStreak().observe(this) {
                 if (it != null) {
@@ -76,7 +76,7 @@ class StatisticsActivity : AppCompatActivity() {
         looseButton.setOnClickListener{
             var entry = GameHistory()
             entry.date = getCurrentDateTimeAsLong()
-            entry.score = 0
+            entry.score = 0.0f
             entry.streak = 0
             gameHistoryViewModel.insertEntry(entry)
         }

@@ -34,7 +34,7 @@ class GameHistoryViewModel(private val repository: GameHistoryRepository) : View
         return repository.getLongestStreak()
     }
 
-    fun getTotalScore() : LiveData<Int> {
+    fun getTotalScore() : LiveData<Float> {
         return repository.getTotalScore()
     }
 

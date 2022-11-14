@@ -31,7 +31,7 @@ interface GameHistoryDbDao {
     fun getLongestStreak() : LiveData<Int>
 
     @Query ("SELECT SUM(day_score) FROM history_table")
-    fun getTotalScore() : LiveData<Int>
+    fun getTotalScore() : LiveData<Float>
 
     @Query("SELECT COUNT(*) FROM history_table")
     fun getTotalGamesPlayed() : LiveData<Int>
