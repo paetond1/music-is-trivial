@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "594916045213-dibe3lrb6lbe2v0qfdn9kci2o0nabu9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sfu362group2.musicistrivial",
+            "certificate_hash": "957f8bdd59b93061023e8b1595f260c9b3d35bb8"
+          }
+        },
+        {
           "client_id": "594916045213-5plljgf61mrq3gcotnd6ftatcpcc20do.apps.googleusercontent.com",
           "client_type": 3
         }

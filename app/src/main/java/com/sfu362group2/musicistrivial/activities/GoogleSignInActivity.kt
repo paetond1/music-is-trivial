@@ -25,8 +25,7 @@ class GoogleSignInActivity : AppCompatActivity() {
 
         signOutbtn.setOnClickListener {
             Firebase.auth.signOut()
-
-            val intent = Intent(applicationContext, MainActivity::class.java)
+            val intent = Intent(applicationContext, SignInActivity::class.java)
             startActivity(intent)
         }
 
