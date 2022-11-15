@@ -22,7 +22,7 @@ Minimum SDK verision 32
 Abay Kulamkadyr,
 Alex Cheung,
 Paeton Dhesi,
-Peter Fan,
+Peter Fan
 
 
 ## License
