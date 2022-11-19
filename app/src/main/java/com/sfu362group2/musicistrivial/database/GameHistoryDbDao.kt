@@ -39,6 +39,9 @@ interface GameHistoryDbDao {
     @Query("SELECT AVG(day_score) FROM history_table")
     fun getAvgScore() : LiveData<Float>
 
-    @Query("SELECT COUNT(*) FROM history_table WHERE day_score = 0")
+    @Query("SELECT COUNT(*) FROM history_table WHERE day_score = 0.0")
     fun getTotalZeroScoreGames() : LiveData<Int>
+
+    @Query("SELECT COUNT(*) FROM history_table WHERE day_score = 5.0")
+    fun getPerfectScore() : LiveData<Int>
 }

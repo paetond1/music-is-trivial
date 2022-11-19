@@ -49,6 +49,10 @@ class GameHistoryViewModel(private val repository: GameHistoryRepository) : View
     fun getTotalZeroScoreGames() : LiveData<Int> {
         return repository.getTotalZeroScoreGames()
     }
+    fun getPerfectScore() : LiveData<Int> {
+        return repository.getPerfectScore()
+    }
+
 
 
     class GameHistoryViewModelFactory(private val repository: GameHistoryRepository)

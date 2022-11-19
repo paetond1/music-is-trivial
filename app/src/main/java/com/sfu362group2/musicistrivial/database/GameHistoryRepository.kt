@@ -51,6 +51,9 @@ class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
     fun getTotalGamesPlayed() : LiveData<Int> {
         return gameHistoryDbDao.getTotalGamesPlayed()
     }
+    fun getPerfectScore() : LiveData<Int> {
+        return gameHistoryDbDao.getPerfectScore()
+    }
 
     fun getTotalZeroScoreGames() : LiveData<Int> {
         return gameHistoryDbDao.getTotalZeroScoreGames()

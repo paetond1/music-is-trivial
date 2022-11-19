@@ -28,6 +28,7 @@ class StatisticsActivity : AppCompatActivity() {
     private lateinit var zeroScoreGamesStat: TextView
     private lateinit var winButton: Button
     private lateinit var looseButton: Button
+    private lateinit var perfectScoreButton: Button
 
     private lateinit var gameHistoryDatabase: GameHistoryDb
     private lateinit var gameHistoryDatabaseDao: GameHistoryDbDao
@@ -36,7 +37,6 @@ class StatisticsActivity : AppCompatActivity() {
     private lateinit var gameHistoryViewModelFactory: GameHistoryViewModel.GameHistoryViewModelFactory
     private lateinit var gameHistoryAdapter: GameHistoryAdapter
     private lateinit var gameHistoryArrayList: ArrayList<GameHistory>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
@@ -73,6 +73,29 @@ class StatisticsActivity : AppCompatActivity() {
             }
         }
 
+        perfectScoreButton.setOnClickListener {
+            var entry = GameHistory()
+            entry.date = getCurrentDateTimeAsLong()
+            entry.score = 5.0f
+            var count = 0
+            gameHistoryViewModel.getCurrentStreak().observe(this) {
+                if (it != null) {
+                    entry.streak = it + 1
+                    if(count < 1) {
+                        gameHistoryViewModel.insertEntry(entry)
+                        count++
+                    }
+                }
+                else {
+                    entry.streak = 1
+                    if(count < 1) {
+                        gameHistoryViewModel.insertEntry(entry)
+                        count++
+                    }
+                }
+            }
+        }
+
         looseButton.setOnClickListener{
             var entry = GameHistory()
             entry.date = getCurrentDateTimeAsLong()
@@ -86,6 +109,7 @@ class StatisticsActivity : AppCompatActivity() {
         renderAvgScoreStat()
         renderLongestStreak()
         renderZeroScoreGames()
+        renderPerfectScore()
     }
 
     private fun renderTotalScore() {
@@ -117,6 +141,12 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    private fun renderPerfectScore() {
+        gameHistoryViewModel.getPerfectScore().observe(this) {
+            perfectGamesStat.text = it.toString()
+        }
+    }
+
 
     private fun bindUIComponents() {
         totalGamesStat = findViewById(R.id.total_games_played_stat)
@@ -127,7 +157,7 @@ class StatisticsActivity : AppCompatActivity() {
         zeroScoreGamesStat = findViewById(R.id.zero_score_games_stat)
         winButton = findViewById(R.id.win_button)
         looseButton = findViewById(R.id.loose_button)
-
+        perfectScoreButton = findViewById(R.id.perfect_score_btn)
     }
 
     private fun initDatabase() {
