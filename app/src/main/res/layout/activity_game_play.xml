@@ -22,41 +22,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginBottom="50dp"/>
-    <!--TODO: Will have a ListView and adapter for the list of songs-->
-    <TextView
-        android:id="@+id/test_song_1"
-        android:text="Test Song 1"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-    <TextView
-        android:id="@+id/test_song_2"
-        android:text="Test Song 2"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-    <TextView
-        android:id="@+id/test_song_3"
-        android:text="Test Song 3"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-
+    <ListView
+        android:id="@+id/song_listview"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:gravity="center_horizontal"
         android:orientation="horizontal"
