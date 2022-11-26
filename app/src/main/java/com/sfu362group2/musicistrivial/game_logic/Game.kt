@@ -1,27 +1,35 @@
 package com.sfu362group2.musicistrivial.game_logic
 
-class Game(date: String, artistName: String, allSongsInOrder: ArrayList<String>) {
-    private val date: String
+import android.util.Log
+
+private const val TAG = "Game Class: "
+
+class Game(date: Long, artistName: String, allSongsInOrder: ArrayList<String>)  {
+    private val date: Long
     private val artistName: String
     private val allSongsInOrder: List<String>
-    private val songOptions : List<String>
-    private val correctSongs: List<String>
-    private var score: Float
-    private var submittedSongs: List<String>?
-    private var detailedScore: ArrayList<Float>
+    private val songOptions : List<Song>
+    private val correctSongs: ArrayList<String>
+    private var submittedSongs: ArrayList<String>
+    private var detailedScore: Array<Float>
 
     init {
         this.date = date
         this.artistName = artistName
         this.allSongsInOrder = allSongsInOrder
-        this.songOptions = allSongsInOrder.shuffled()
-        this.correctSongs = allSongsInOrder.subList(0, 5)
-        this.score = 0.0f
-        this.detailedScore = arrayListOf(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f)
-        this.submittedSongs = null
+        this.correctSongs = ArrayList(allSongsInOrder.subList(0, 5))
+        this.detailedScore = arrayOf(-1.0f, -1.0f, -1.0f, -1.0f, -1.0f)
+        this.submittedSongs = ArrayList()
+        this.songOptions = ArrayList()
+
+        val shuffledSongStrings = allSongsInOrder.shuffled()
+        for (str in shuffledSongStrings){
+            this.songOptions.add(Song(str))
+        }
     }
 
-    fun getCorrectSongs(): List<String> {
+
+    fun getCorrectSongs(): ArrayList<String> {
         return correctSongs
     }
 
@@ -29,41 +37,57 @@ class Game(date: String, artistName: String, allSongsInOrder: ArrayList<String>)
         return this.artistName
     }
 
-    fun getSongOptions(): List<String> {
-        return this.songOptions
+    fun getSongOptions(): ArrayList<Song> {
+        return this.songOptions as ArrayList<Song>
     }
 
-    fun getSubmittedSongs(submittedSongs: List<String>): List<String> {
-        return submittedSongs
+    fun getSubmittedSongs(): List<String> {
+        return this.submittedSongs
     }
 
-    fun getScore(): Float {
-        return this.score
-    }
-
-    fun getDetailedScore(): List<Float> {
-        return this.detailedScore
-    }
-
-    fun submitSongs(submittedSongs: ArrayList<String>): Int {
+    // checks the submitted songs against correct songs and outputs detailed score list
+    fun submitSongs(): Array<Float>? {
         if (submittedSongs.size != 5) {
-            return -1
+            return null
         }
-        this.submittedSongs = submittedSongs
         for (i in 0..4) {
             if (this.correctSongs[i] == submittedSongs[i]) {
                 detailedScore[i] = 1.0f
-            } else if (submittedSongs[i].contains(this.correctSongs[i])) {
+            } else if (isInCorrectSongs(submittedSongs[i])) {
                 detailedScore[i] = 0.5f
             } else {
                 detailedScore[i] = 0.0f
             }
         }
-        return 0
+        return detailedScore
+    }
+
+    fun addSongToSubmit(songTitle: String){
+        if (this.submittedSongs.size < 5){
+            this.submittedSongs.add(songTitle)
+        }
+        else{
+            Log.e(TAG, "Could not add song to submit, too many songs")
+        }
+    }
+
+    fun clearSubmittedSongs(){
+        this.submittedSongs.clear()
     }
 
 
-    fun getDate(): String {
+    fun getDate(): Long {
         return this.date
     }
+
+    private fun isInCorrectSongs(song: String) : Boolean{
+        for (str in correctSongs){
+            if (song == str){
+                return true
+            }
+        }
+        return false
+    }
+
+    inner class Song(val song_title: String, var input_rank: Int = 0)
 }
