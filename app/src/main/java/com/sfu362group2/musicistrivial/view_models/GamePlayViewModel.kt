@@ -13,7 +13,7 @@ class GamePlayViewModel : ViewModel() {
     }
 
     val game = MutableLiveData<Game>()
-    var shuffledSongs = MutableLiveData<ArrayList<Game.Song>>()
+    val shuffledSongs = MutableLiveData<ArrayList<Game.Song>>()
     private val rankCounter = MutableLiveData(0)
 
     fun setGame(
@@ -49,6 +49,14 @@ class GamePlayViewModel : ViewModel() {
                 Log.i(TAG, "Submit List: ${game.value!!.getSubmittedSongs()}")
                 Log.i(TAG, "Correct List: ${game.value!!.getCorrectSongs()}")
             }
+        }
+    }
+
+    fun submitSongs() : Array<Float>? {
+        return if (rankCounter.value!! == 5){
+            game.value!!.submitSongs()
+        } else{
+            null
         }
     }
 

@@ -1,15 +1,20 @@
 <resources>
     <string name="app_name">Music is Trivial</string>
 
-    <!--  Spotify  -->
+    <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
     <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>
     <string name="spotify_top_tracks_path">/top-tracks?market=CA</string>
     <string name="spotify_search_url">https://api.spotify.com/v1/search</string>
 
-    <!--  Bundle Keys  -->
+    <!--    Bundle Keys  -->
     <string name="bund_key_artist_name">artistName</string>
     <string name="bund_key_artist_id">artistId</string>
     <string name="bund_key_date">date</string>
     <string name="bund_key_all_songs">allSongsInOrder</string>
+    <string name="bund_key_correct_songs">correctSongs</string>
+    <string name="bund_key_detailed_score">detailedScore</string>
+
+    <!--    Game Results   -->
+    <string name="result_message">You got %1$.1f out of 5! Play again tomorrow!</string>
 </resources>

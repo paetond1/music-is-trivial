@@ -2,6 +2,7 @@ package com.sfu362group2.musicistrivial.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -61,11 +62,30 @@ class GamePlayActivity : AppCompatActivity() {
     private fun onClick(view: View) {
         when (view) {
             submitButton -> {
-                // TODO: game logic and add to Intent
-                // TODO: remember to check for duplicated rank! Currently bugged
-                val i = Intent(this, GameResultActivity::class.java)
-                startActivity(i)
-                finish()
+                val detailedScore = viewModel.submitSongs()
+                if (detailedScore != null) {
+                    // TODO: insert to database
+                    Log.i(TAG, "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}")
+                    val outBundle = Bundle()
+                    outBundle.putString(
+                        getString(R.string.bund_key_artist_name),
+                        viewModel.game.value?.getArtistName()
+                    )
+                    outBundle.putFloatArray(
+                        getString(R.string.bund_key_detailed_score),
+                        detailedScore.toFloatArray()
+                    )
+                    outBundle.putStringArrayList(getString(R.string.bund_key_correct_songs),
+                        viewModel.game.value!!.getCorrectSongs()
+                    )
+
+                    val i = Intent(this, GameResultActivity::class.java)
+                    i.putExtras(outBundle)
+                    startActivity(i)
+                    finish()
+                } else {
+                    // TODO Error Dialog for not enough songs ranked
+                }
             }
             clearButton -> {
                 // Set all input_rank to 0

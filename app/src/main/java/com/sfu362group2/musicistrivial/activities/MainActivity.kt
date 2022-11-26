@@ -14,7 +14,6 @@ import com.sfu362group2.musicistrivial.api.Spotify
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         playButton = findViewById(R.id.button_play)
+        // TODO : Render streak
         playButton.setOnClickListener {
+            // TODO : Add logic to check that the day has not been played already
             val i = Intent(this, GamePlayActivity::class.java)
             i.putExtras(gameBundle())
             startActivity(i)
