@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.sfu362group2.musicistrivial.R
-import com.sfu362group2.musicistrivial.activities.GamePlayActivity
+import com.sfu362group2.musicistrivial.game_logic.Game
 
 class SongListAdapter(
     private val myContext: Context,
-    private var songList: ArrayList<GamePlayActivity.Song>,
+    private var songList: ArrayList<Game.Song>,
 ): BaseAdapter() {
     override fun getCount(): Int {
         return songList.size
@@ -40,7 +40,7 @@ class SongListAdapter(
         return view
     }
 
-    fun replaceList(newSongList: ArrayList<GamePlayActivity.Song>) {
+    fun replaceList(newSongList: ArrayList<Game.Song>) {
         songList = newSongList
     }
 }

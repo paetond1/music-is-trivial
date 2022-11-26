@@ -13,7 +13,7 @@ import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (viewModel.date.value != LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)) {
+        if (viewModel.date.value != LocalDate.now().toEpochDay()) {
             viewModel.spotifyCalls(spotify, queue)
         }
     }
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(getString(R.string.bund_key_artist_name), viewModel.artistName.value)
         bundle.putString(getString(R.string.bund_key_artist_id), viewModel.artistId.value)
-        bundle.putString(getString(R.string.bund_key_date), viewModel.date.value)
+        bundle.putLong(getString(R.string.bund_key_date), viewModel.date.value!!)
         bundle.putStringArrayList(
             getString(R.string.bund_key_all_songs),
             viewModel.allSongsInOrder.value
