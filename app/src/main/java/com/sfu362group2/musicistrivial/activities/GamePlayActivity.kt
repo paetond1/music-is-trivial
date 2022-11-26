@@ -11,7 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.adapters.SongListAdapter
+import com.sfu362group2.musicistrivial.database.GameHistory
+import com.sfu362group2.musicistrivial.database.GameHistoryDb
+import com.sfu362group2.musicistrivial.database.GameHistoryDbDao
+import com.sfu362group2.musicistrivial.database.GameHistoryRepository
 import com.sfu362group2.musicistrivial.game_logic.Game
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
 import com.sfu362group2.musicistrivial.view_models.GamePlayViewModel
 
 private const val TAG = "DEBUG: GamePlayActivity - "
@@ -25,6 +30,12 @@ class GamePlayActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private lateinit var inBundle: Bundle
     private lateinit var viewModel: GamePlayViewModel
+
+    private lateinit var gameHistoryDatabase: GameHistoryDb
+    private lateinit var gameHistoryDatabaseDao: GameHistoryDbDao
+    private lateinit var gameHistoryRepository: GameHistoryRepository
+    private lateinit var gameHistoryViewModel: GameHistoryViewModel
+    private lateinit var gameHistoryViewModelFactory: GameHistoryViewModel.GameHistoryViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +56,9 @@ class GamePlayActivity : AppCompatActivity() {
         listViewAdapter = SongListAdapter(this, viewModel.game.value!!.getSongOptions())
         listView.adapter = listViewAdapter
         listView.setOnItemClickListener { parent, view, position, id -> songOnClick(position) }
+
+        // init database
+        initDatabase()
     }
 
     private fun initViewModel() {
@@ -64,8 +78,15 @@ class GamePlayActivity : AppCompatActivity() {
             submitButton -> {
                 val detailedScore = viewModel.submitSongs()
                 if (detailedScore != null) {
-                    // TODO: insert to database
-                    Log.i(TAG, "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}")
+
+                    val entry = GameHistory()
+                    entry.date = viewModel.game.value!!.getDate()
+                    entry.score = detailedScore.sum()
+                    Log.i(
+                        TAG,
+                        "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}"
+                    )
+                    gameHistoryViewModel.insertEntry(entry)
                     val outBundle = Bundle()
                     outBundle.putString(
                         getString(R.string.bund_key_artist_name),
@@ -75,7 +96,8 @@ class GamePlayActivity : AppCompatActivity() {
                         getString(R.string.bund_key_detailed_score),
                         detailedScore.toFloatArray()
                     )
-                    outBundle.putStringArrayList(getString(R.string.bund_key_correct_songs),
+                    outBundle.putStringArrayList(
+                        getString(R.string.bund_key_correct_songs),
                         viewModel.game.value!!.getCorrectSongs()
                     )
 
@@ -107,5 +129,17 @@ class GamePlayActivity : AppCompatActivity() {
         viewModel.shuffledSongs.value = songList
         listViewAdapter.replaceList(songList)
         listViewAdapter.notifyDataSetChanged()
+    }
+
+    private fun initDatabase() {
+        gameHistoryDatabase = GameHistoryDb.getInstance(this)
+        gameHistoryDatabaseDao = gameHistoryDatabase.gameHistoryDbDao
+        gameHistoryRepository = GameHistoryRepository(gameHistoryDatabaseDao)
+        gameHistoryViewModelFactory =
+            GameHistoryViewModel.GameHistoryViewModelFactory(gameHistoryRepository)
+        gameHistoryViewModel = ViewModelProvider(
+            this,
+            gameHistoryViewModelFactory
+        )[GameHistoryViewModel::class.java]
     }
 }
