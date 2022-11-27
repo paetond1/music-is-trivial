@@ -5,6 +5,7 @@
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15dp"
     tools:context=".activities.GamePlayActivity">
     <LinearLayout
         android:orientation="vertical"
@@ -16,8 +17,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp">
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/statistics_title"
                 android:text="@string/statistics_title"
@@ -144,8 +144,9 @@
         <Button
             android:id="@+id/button_to_home"
             android:text="@string/home_button"
+            android:backgroundTint="@color/light_purple"
             android:layout_weight="0"
-            android:layout_margin="20dp"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp" />

@@ -38,12 +38,12 @@
 
     <!--    Statistics      -->
     <string name="statistics_title">Statistics</string>
-    <string name="stat_total_games_played">Total Games Played: </string>
-    <string name="stat_total_score">Total Score: </string>
-    <string name="stat_avg_score">Average Score: </string>
-    <string name="stat_perfect_games">Perfect Games: </string>
-    <string name="stat_longest_streak">Longest Streak: </string>
-    <string name="stat_zero_score_games">Zero Score Games: </string>
+    <string name="stat_total_games_played">Total Games Played:\ </string>
+    <string name="stat_total_score">Total Score:\ </string>
+    <string name="stat_avg_score">Average Score:\ </string>
+    <string name="stat_perfect_games">Perfect Games:\ </string>
+    <string name="stat_longest_streak">Longest Streak:\ </string>
+    <string name="stat_zero_score_games">Zero Score Games:\ </string>
 
     <!--    Instructions    -->
     <string name="instructions_title">Instructions</string>
