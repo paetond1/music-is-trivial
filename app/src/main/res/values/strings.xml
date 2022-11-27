@@ -34,7 +34,7 @@
     <string name="gameplay_instruction">Pick their 5 most played songs in order.</string>
 
     <!--    Game Results   -->
-    <string name="result_message">You got %1$.1f out of 5! Play again tomorrow!</string>
+    <string name="result_message">You got %1$.1f out of 5!\nPlay again tomorrow!</string>
 
     <!--    Statistics      -->
     <string name="statistics_title">Statistics</string>
