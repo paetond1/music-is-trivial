@@ -1,7 +1,6 @@
 package com.sfu362group2.musicistrivial.view_models
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sfu362group2.musicistrivial.game_logic.Game
@@ -41,7 +40,9 @@ class GamePlayViewModel : ViewModel() {
             for (song in shuffledSongs.value!!) {
                 song.input_rank = 0
             }
-
+            for (i in 0 until songsForSubmission.size){
+                songsForSubmission[i] = ""
+            }
         }
     }
 
