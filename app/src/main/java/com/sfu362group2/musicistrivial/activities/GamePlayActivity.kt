@@ -92,7 +92,7 @@ class GamePlayActivity : AppCompatActivity() {
                         TAG,
                         "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}"
                     )
-                    gameHistoryViewModel.insertEntry(entry)
+//                    gameHistoryViewModel.insertEntry(entry)
                     val outBundle = Bundle()
                     outBundle.putString(
                         getString(R.string.bund_key_artist_name),

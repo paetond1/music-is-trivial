@@ -48,7 +48,7 @@
     <!--    Instructions    -->
     <string name="instructions_title">Instructions</string>
     <string name="general_subtitle">General</string>
-    <string name="general_desc">Music is Trivia is a daily game for music lovers. You are prompted with an artist and a list of their most played songs on Spotify. Your goal is to choose the 5 most played songs in the correct order</string>
+    <string name="general_desc">Music is Trivial is a daily game for music lovers. You are prompted with an artist and a list of their most played songs on Spotify. Your goal is to choose the 5 most played songs in the correct order</string>
     <string name="gameplay_subtitle">Gameplay</string>
     <string name="gameplay_desc">Tap songs in the order of most played to least played (1 to 5). If you make a mistake, tap Clear Selections and start over. Submit once you have chosen 5 songs.</string>
     <string name="scoring_subtitle">Scoring</string>
