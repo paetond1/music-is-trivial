@@ -1,6 +1,7 @@
 package com.sfu362group2.musicistrivial.view_models
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sfu362group2.musicistrivial.game_logic.Game
@@ -14,7 +15,10 @@ class GamePlayViewModel : ViewModel() {
 
     val game = MutableLiveData<Game>()
     val shuffledSongs = MutableLiveData<ArrayList<Game.Song>>()
-    private val rankCounter = MutableLiveData(0)
+    val rankCounter: Int get() { return rankedSet.size }
+
+    private var unrankedSet: MutableSet<Int> = mutableSetOf(1, 2, 3, 4, 5)
+    private var rankedSet: MutableSet<Int> = mutableSetOf()
 
     fun setGame(
         date: Long,
@@ -30,7 +34,8 @@ class GamePlayViewModel : ViewModel() {
 
     fun clearRanks() {
         if (shuffledSongs.value != null && game.value != null) {
-            rankCounter.value = 0
+            unrankedSet = mutableSetOf(1, 2, 3, 4, 5)
+            rankedSet = mutableSetOf()
             game.value!!.clearSubmittedSongs()
             for (song in shuffledSongs.value!!) {
                 song.input_rank = 0
@@ -41,21 +46,33 @@ class GamePlayViewModel : ViewModel() {
 
     fun rankSong(position: Int) {
         if (shuffledSongs.value != null && game.value != null){
-            if (shuffledSongs.value!![position].input_rank == 0 && rankCounter.value!! < MAX_CHOSEN_SONGS) {
-                rankCounter.value = rankCounter.value!! + 1
-                shuffledSongs.value!![position].input_rank = rankCounter.value!!
+            // rank an unselected song
+            if (shuffledSongs.value!![position].input_rank == 0 && rankCounter < MAX_CHOSEN_SONGS) {
+                val pop = unrankedSet.min()
+                unrankedSet.remove(pop)
+                rankedSet.add(pop)
+                shuffledSongs.value!![position].input_rank = pop
                 val songTitleRanked = shuffledSongs.value!![position].song_title
                 game.value!!.addSongToSubmit(songTitleRanked)
                 Log.i(TAG, "Submit List: ${game.value!!.getSubmittedSongs()}")
                 Log.i(TAG, "Correct List: ${game.value!!.getCorrectSongs()}")
+            // deselect a ranked song
+            } else if (shuffledSongs.value!![position].input_rank != 0) {
+                val pop = shuffledSongs.value!![position].input_rank
+                unrankedSet.add(pop)
+                rankedSet.remove(pop)
+                shuffledSongs.value!![position].input_rank = 0
+                val songTitle = shuffledSongs.value!![position].song_title
+                game.value!!.removeSongToSubmit(songTitle)
             }
         }
     }
 
     fun submitSongs() : Array<Float>? {
-        return if (rankCounter.value!! == 5){
+        return if (rankCounter == 5){
             game.value!!.submitSongs()
         } else{
+            Log.d(TAG, "submitSongs() returned null")
             null
         }
     }
