@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
 
             android:text="5"
-
-            android:textSize="25dp"/>
+            android:backgroundTint="@android:color/transparent"
+            android:theme="@style/song_normal"/>
     </RelativeLayout>
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="Teswefe "
-        android:textSize="25dp"
+        android:theme="@style/song_normal"
         />
 
 
