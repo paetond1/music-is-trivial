@@ -6,13 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "history_table")
 class GameHistory (
-    @PrimaryKey(autoGenerate = false)
-    var date: Long? = null,
+    @PrimaryKey(autoGenerate = false) var date: Long? = null,
 
-    @ColumnInfo(name =  "day_score")
-    var score: Float = 0.0f,
+    @ColumnInfo(name =  "day_score") var score: Float = 0.0f,
 
-    @ColumnInfo(name = "consecutive_days_played")
-    var streak: Int = 0
+    @ColumnInfo(name = "consecutive_days_played") var streak: Int = 0
 
 )

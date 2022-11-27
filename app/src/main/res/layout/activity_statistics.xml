@@ -100,6 +100,30 @@
             android:background="@color/purple_500"
             android:text="40"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/currentStreak_textView"
+            android:text="Current Streak: "
+            android:background="@color/purple_200"
+            android:textSize="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+        <TextView
+            android:id='@+id/currentStreak'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:background="@color/purple_500"
+            android:text="40"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -121,6 +145,7 @@
             android:background="@color/purple_500"
             android:text="40"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,7 +166,9 @@
             android:textSize="30dp"
             android:background="@color/purple_500"
             android:text="40"/>
+
     </LinearLayout>
+
 
     <Button
         android:id="@+id/button_to_home"
@@ -150,25 +177,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"/>
-    <Button
-        android:id="@+id/win_button"
-        android:text = "Win"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <Button
-        android:id="@+id/loose_button"
-        android:text = "Loose"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <Button
-        android:id="@+id/perfect_score_btn"
-        android:text = "Add perfect score"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
+
 </LinearLayout>

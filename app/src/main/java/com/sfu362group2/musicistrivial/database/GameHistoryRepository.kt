@@ -1,5 +1,6 @@
 package com.sfu362group2.musicistrivial.database
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -8,54 +9,32 @@ import kotlinx.coroutines.launch
 
 class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
     val allEntries: Flow<List<GameHistory>> = gameHistoryDbDao.getAllEntries()
+    val lastEntry: Flow<GameHistory> = gameHistoryDbDao.getLastEntry()
+    val currentStreak: Flow<Int> = gameHistoryDbDao.getCurrentStreak()
+    val totalScore: Flow<Float> = gameHistoryDbDao.getTotalScore()
+    val longestStreak: Flow<Int> = gameHistoryDbDao.getLongestStreak()
+    val avgScore: Flow<Float> = gameHistoryDbDao.getAvgScore()
+    val totalGamesPlayed: Flow<Int> = gameHistoryDbDao.getTotalGamesPlayed()
+    val perfectScoredGames: Flow<Int> = gameHistoryDbDao.getPerfectScore()
+    val zeroScoredGames: Flow<Int> = gameHistoryDbDao.getTotalZeroScoreGames()
 
-    fun insertEntry(gameHistory: GameHistory) {
-        CoroutineScope(IO).launch {
-            gameHistoryDbDao.insertDailyEntry(gameHistory)
-        }
+    @WorkerThread
+    suspend fun insertEntry(gameHistory: GameHistory) {
+        gameHistoryDbDao.insertDailyEntry(gameHistory)
     }
 
-    fun deleteEntry(key: Long) {
-        CoroutineScope(IO).launch {
-            gameHistoryDbDao.deleteDailyEntry(key)
-        }
+    @WorkerThread
+    suspend fun deleteEntry(key: Long) {
+        gameHistoryDbDao.deleteDailyEntry(key)
     }
 
-
-    fun deleteAllEntries() {
-        CoroutineScope(IO).launch{
-            gameHistoryDbDao.deleteAllEntries()
-        }
+    @WorkerThread
+    suspend fun deleteAllEntries() {
+        gameHistoryDbDao.deleteAllEntries()
     }
 
-    fun getDailyEntry(key: Long) : LiveData<GameHistory> {
+    fun getDailyEntry(key: Long): Flow<GameHistory> {
         return gameHistoryDbDao.getDailyEntry(key)
     }
 
-    fun getCurrentStreak() : LiveData<Int> {
-        return gameHistoryDbDao.getCurrentStreak()
-    }
-
-    fun getTotalScore() : LiveData<Float> {
-        return gameHistoryDbDao.getTotalScore()
-    }
-
-    fun getLongestStreak(): LiveData<Int> {
-        return gameHistoryDbDao.getLongestStreak()
-    }
-
-    fun getAvgScore() : LiveData<Float> {
-        return gameHistoryDbDao.getAvgScore()
-    }
-
-    fun getTotalGamesPlayed() : LiveData<Int> {
-        return gameHistoryDbDao.getTotalGamesPlayed()
-    }
-    fun getPerfectScore() : LiveData<Int> {
-        return gameHistoryDbDao.getPerfectScore()
-    }
-
-    fun getTotalZeroScoreGames() : LiveData<Int> {
-        return gameHistoryDbDao.getTotalZeroScoreGames()
-    }
 }
