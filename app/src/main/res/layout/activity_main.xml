@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Today's Artist"
+        android:text="@string/todays_artist"
         android:theme="@style/subtitle"
         app:layout_constraintBottom_toTopOf="@+id/artist_image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Artist Name"
+        android:text="@string/artist_name"
         android:theme="@style/title_bold"
         app:layout_constraintEnd_toEndOf="@+id/artist_image"
         app:layout_constraintStart_toStartOf="@+id/artist_image"
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
-                android:text="Play!"
+                android:text="@string/play_button"
                 app:layout_constraintTop_toBottomOf="@+id/artist_name"
                 android:theme="@style/button_text"
                 android:backgroundTint="@color/light_purple"/>
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
                 android:layout_marginTop="5dp"
-                android:text="Instructions"
+                android:text="@string/instructions_button"
                 android:theme="@style/button_text"
                 android:backgroundTint="@color/dark_purple"/>
 
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
                 android:layout_marginTop="5dp"
-                android:text="Statistics"
+                android:text="@string/stat_button"
                 android:backgroundTint="@color/teal_200"
                 android:theme="@style/button_text" />
 
@@ -98,7 +98,7 @@
                 android:theme="@style/button_text"
                 android:backgroundTint="@color/green_result"
                 android:layout_marginTop="5dp"
-                android:text="Login with Google" />
+                android:text="@string/login_w_google_button" />
         </LinearLayout>
 
         <TextView
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Current Streak: 5 days!"
+            android:text="@string/default_streak_message"
             android:theme="@style/song_normal"
             app:layout_constraintTop_toBottomOf="@id/buttons"
             app:layout_constraintBottom_toBottomOf="parent"

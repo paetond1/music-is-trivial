@@ -23,7 +23,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Artist Name"
+                android:text="@string/artist_name"
                 android:theme="@style/title_bold" />
             <TextView
                 android:id="@+id/pick_5_songs_message"
@@ -33,7 +33,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center_horizontal"
-                android:text="Pick their 5 most played songs in order."
+                android:text="@string/gameplay_instruction"
                 android:theme="@style/subtitle"/>
             <ListView
                 android:id="@+id/song_listview"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Clear Selections"
+                android:text="@string/clear_selections_button"
                 android:theme="@style/button_text"
                 android:backgroundTint="@color/greyed_out"/>
             <Button
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Submit!"
+                android:text="@string/submit_button"
                 android:theme="@style/button_text"
                 android:backgroundTint="@color/light_purple"/>
         </LinearLayout>

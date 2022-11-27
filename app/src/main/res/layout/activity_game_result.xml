@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:gravity="center_horizontal"
-                    android:text="Artist Name"
+                    android:text="@string/artist_name"
                     android:theme="@style/title_bold" />
 
                 <TextView
@@ -91,7 +91,7 @@
                     android:id="@+id/button_to_home"
                     android:theme="@style/button_text"
                     android:backgroundTint="@color/light_purple"
-                    android:text="Home"
+                    android:text="@string/home_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="60dp"
@@ -100,7 +100,7 @@
                     android:id="@+id/button_share_to_Facebook"
                     android:theme="@style/button_text"
                     android:backgroundTint="@color/dark_purple"
-                    android:text="Share to Facebook"
+                    android:text="@string/share_to_facebook_button"
                     android:layout_width="match_parent"
                     android:minHeight="60dp"
                     android:layout_height="wrap_content"
