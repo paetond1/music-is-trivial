@@ -19,6 +19,7 @@ class GamePlayViewModel : ViewModel() {
 
     private var unrankedSet: MutableSet<Int> = mutableSetOf(1, 2, 3, 4, 5)
     private var rankedSet: MutableSet<Int> = mutableSetOf()
+    private var songsForSubmission: ArrayList<String> = arrayListOf("","","","","")
 
     fun setGame(
         date: Long,
@@ -53,23 +54,25 @@ class GamePlayViewModel : ViewModel() {
                 rankedSet.add(pop)
                 shuffledSongs.value!![position].input_rank = pop
                 val songTitleRanked = shuffledSongs.value!![position].song_title
-                game.value!!.addSongToSubmit(songTitleRanked)
-                Log.i(TAG, "Submit List: ${game.value!!.getSubmittedSongs()}")
-                Log.i(TAG, "Correct List: ${game.value!!.getCorrectSongs()}")
+                songsForSubmission[pop-1] = songTitleRanked
             // deselect a ranked song
             } else if (shuffledSongs.value!![position].input_rank != 0) {
                 val pop = shuffledSongs.value!![position].input_rank
                 unrankedSet.add(pop)
                 rankedSet.remove(pop)
                 shuffledSongs.value!![position].input_rank = 0
-                val songTitle = shuffledSongs.value!![position].song_title
-                game.value!!.removeSongToSubmit(songTitle)
+                songsForSubmission[pop-1] = ""
             }
+            Log.i(TAG, "Submit List: $songsForSubmission")
+            Log.i(TAG, "Correct List: ${game.value!!.getCorrectSongs()}")
         }
     }
 
     fun submitSongs() : Array<Float>? {
         return if (rankCounter == 5){
+            for (i in 0..4) {
+                game.value!!.addSongToSubmit(songsForSubmission[i])
+            }
             game.value!!.submitSongs()
         } else{
             Log.d(TAG, "submitSongs() returned null")
