@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
@@ -15,8 +17,9 @@ import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
 
+    private lateinit var splashScreen: SplashScreen
     private lateinit var artistImg: ImageView
     private lateinit var artistName: TextView
     private lateinit var playButton: Button
@@ -29,6 +32,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todaysScoreMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        initViewModel()
+        spotify = Spotify(this)
+        queue = Volley.newRequestQueue(this)
+//        if (viewModel.date.value != LocalDate.now().toEpochDay()) {
+//            viewModel.spotifyCalls(spotify, queue)
+//        }
+
+        // Do not move installSplashScreen(). Must be before super.onCreate() and setContentView()
+        splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -60,12 +75,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         artistImg = findViewById(R.id.artist_image)
-        artistImg.setImageResource(R.mipmap.ic_launcher)
+//        artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
 
-        initViewModel()
-        spotify = Spotify(this)
-        queue = Volley.newRequestQueue(this)
+//        initViewModel()
+//        spotify = Spotify(this)
+//        queue = Volley.newRequestQueue(this)
 
     }
 
@@ -98,5 +113,11 @@ class MainActivity : AppCompatActivity() {
                 .load(viewModel.artistImgUrl.value)
                 .into(artistImg)
         }
+    }
+
+    override fun shouldKeepOnScreen(): Boolean {
+        // TODO: fetch Spotify API before loading
+        return viewModel.artistImgUrl.value == null
+
     }
 }
