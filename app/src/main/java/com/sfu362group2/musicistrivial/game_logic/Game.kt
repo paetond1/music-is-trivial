@@ -71,6 +71,19 @@ class Game(date: Long, artistName: String, allSongsInOrder: ArrayList<String>)  
         }
     }
 
+
+    fun removeSongToSubmit(songTitle: String) {
+        if (this.submittedSongs.size == 0) {
+            Log.e(TAG, "No more song to remove.")
+        } else {
+            try {
+                submittedSongs.remove(songTitle)
+            } catch (e : Exception) {
+                Log.e(TAG, "Error removing song: ${e.message}")
+            }
+        }
+    }
+
     fun clearSubmittedSongs(){
         this.submittedSongs.clear()
     }

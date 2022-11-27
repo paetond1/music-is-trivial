@@ -2,9 +2,12 @@ package com.sfu362group2.musicistrivial.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.sfu362group2.musicistrivial.R
+import com.sfu362group2.musicistrivial.view_models.GameResultViewModel
 
 class GameResultActivity : AppCompatActivity() {
 
@@ -18,21 +21,14 @@ class GameResultActivity : AppCompatActivity() {
     private lateinit var homeButton: Button
     private lateinit var shareToFbButton: Button
     private lateinit var inBundle: Bundle
-    private lateinit var detailedScore: FloatArray
-    private lateinit var correctSongs: ArrayList<String>
 
-    // TODO: The songs displayed will take an array of top 5 songs from API
-    //  and display using a ListView. Will need to implement UI logic to
-    //  change colours based on guesses
+    private lateinit var viewModel: GameResultViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
         initTextViews()
-        if (intent.extras != null){
-            inBundle = intent.extras!!
-            setText()
-        }
+        initViewModel()
 
         homeButton = findViewById(R.id.button_to_home)
         homeButton.setOnClickListener {
@@ -53,17 +49,55 @@ class GameResultActivity : AppCompatActivity() {
         song5 = findViewById(R.id.rank_5_song)
     }
 
-    private fun setText(){
-        artistName.text = inBundle.getString(getString(R.string.bund_key_artist_name), "")
-        detailedScore = inBundle.getFloatArray(getString(R.string.bund_key_detailed_score))!!
-        correctSongs = inBundle.getStringArrayList(getString(R.string.bund_key_correct_songs))!!
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(GameResultViewModel::class.java)
 
-        song1.text = correctSongs[0]
-        song2.text = correctSongs[1]
-        song3.text = correctSongs[2]
-        song4.text = correctSongs[3]
-        song5.text = correctSongs[4]
+        if (intent.extras != null){
+            inBundle = intent.extras!!
+            viewModel.artistName.value = inBundle.getString(
+                getString(R.string.bund_key_artist_name), "")
+            viewModel.detailedScore.value = inBundle.getFloatArray(
+                getString(R.string.bund_key_detailed_score))!!
+            viewModel.correctSongs.value = inBundle.getStringArrayList(
+                getString(R.string.bund_key_correct_songs))!!
+        }
 
-        gameResult.text = getString(R.string.result_message, detailedScore.sum())
+        viewModel.artistName.observe(this) {
+            this.artistName.text = it
+        }
+        viewModel.correctSongs.observe(this) {
+            setText(it)
+        }
+        viewModel.detailedScore.observe(this) {
+            setTextColors(it)
+            gameResult.text = getString(R.string.result_message, it.sum())
+        }
+
     }
+
+    private fun setText(correctSongs: ArrayList<String>){
+        song1.text = "1 - ${correctSongs[0]}"
+        song2.text = "2 - ${correctSongs[1]}"
+        song3.text = "3 - ${correctSongs[2]}"
+        song4.text = "4 - ${correctSongs[3]}"
+        song5.text = "5 - ${correctSongs[4]}"
+    }
+
+    private fun setTextColors(detailedScore: FloatArray){
+        setScoreColor(song1, detailedScore[0])
+        setScoreColor(song2, detailedScore[1])
+        setScoreColor(song3, detailedScore[2])
+        setScoreColor(song4, detailedScore[3])
+        setScoreColor(song5, detailedScore[4])
+    }
+
+    private fun setScoreColor(textView: TextView, score: Float){
+        when (score) {
+            0.0f -> textView.setTextColor(getColor(R.color.red_result))
+            0.5f -> textView.setTextColor(getColor(R.color.yellow_result))
+            1.0f -> textView.setTextColor(getColor(R.color.green_result))
+        }
+    }
+
+
 }
