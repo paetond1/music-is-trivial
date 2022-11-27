@@ -26,14 +26,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var queue: RequestQueue
     private lateinit var spotify: Spotify
     private lateinit var viewModel: MainViewModel
+    private lateinit var todaysScoreMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        todaysScoreMessage = findViewById(R.id.todays_score_message)
+        // TODO: Update the message based on whether the user has played already today
+        // todaysScoreMessage.text = ""
+
         playButton = findViewById(R.id.button_play)
         // TODO : Render streak
+        // TODO : Change Button's background color to R.colors.greyed_out if already played today
         playButton.setOnClickListener {
             // TODO : Add logic to check that the day has not been played already
+
             val i = Intent(this, GamePlayActivity::class.java)
             i.putExtras(gameBundle())
             startActivity(i)
