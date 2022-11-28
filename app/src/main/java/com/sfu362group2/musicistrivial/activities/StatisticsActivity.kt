@@ -4,16 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
-import com.sfu362group2.musicistrivial.adapters.GameHistoryAdapter
 import com.sfu362group2.musicistrivial.database.GameHistory
-import com.sfu362group2.musicistrivial.database.GameHistoryDb
-import com.sfu362group2.musicistrivial.database.GameHistoryDbDao
-import com.sfu362group2.musicistrivial.database.GameHistoryRepository
+import com.sfu362group2.musicistrivial.game_logic.Game
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
+import java.time.LocalDate
+
+
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class StatisticsActivity : AppCompatActivity() {
 
@@ -26,17 +28,13 @@ class StatisticsActivity : AppCompatActivity() {
     private lateinit var perfectGamesStat: TextView
     private lateinit var longestStreakStat: TextView
     private lateinit var zeroScoreGamesStat: TextView
-    private lateinit var winButton: Button
-    private lateinit var looseButton: Button
-    private lateinit var perfectScoreButton: Button
+    private lateinit var currentStreakStat: TextView
 
-    private lateinit var gameHistoryDatabase: GameHistoryDb
-    private lateinit var gameHistoryDatabaseDao: GameHistoryDbDao
-    private lateinit var gameHistoryRepository: GameHistoryRepository
-    private lateinit var gameHistoryViewModel: GameHistoryViewModel
-    private lateinit var gameHistoryViewModelFactory: GameHistoryViewModel.GameHistoryViewModelFactory
-    private lateinit var gameHistoryAdapter: GameHistoryAdapter
-    private lateinit var gameHistoryArrayList: ArrayList<GameHistory>
+    // use this to access the database
+    private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
+        GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
@@ -45,64 +43,7 @@ class StatisticsActivity : AppCompatActivity() {
         homeButton.setOnClickListener {
             finish()
         }
-        // TODO: Programmatically update these with Database viewModel
         bindUIComponents()
-        initDatabase()
-
-
-        winButton.setOnClickListener {
-            var entry = GameHistory()
-            entry.date = getCurrentDateTimeAsLong()
-            entry.score = 2.5f
-            var count = 0
-            gameHistoryViewModel.getCurrentStreak().observe(this) {
-                if (it != null) {
-                    entry.streak = it + 1
-                    if(count < 1) {
-                        gameHistoryViewModel.insertEntry(entry)
-                        count++
-                    }
-                }
-                else {
-                    entry.streak = 1
-                    if(count < 1) {
-                        gameHistoryViewModel.insertEntry(entry)
-                        count++
-                    }
-                }
-            }
-        }
-
-        perfectScoreButton.setOnClickListener {
-            var entry = GameHistory()
-            entry.date = getCurrentDateTimeAsLong()
-            entry.score = 5.0f
-            var count = 0
-            gameHistoryViewModel.getCurrentStreak().observe(this) {
-                if (it != null) {
-                    entry.streak = it + 1
-                    if(count < 1) {
-                        gameHistoryViewModel.insertEntry(entry)
-                        count++
-                    }
-                }
-                else {
-                    entry.streak = 1
-                    if(count < 1) {
-                        gameHistoryViewModel.insertEntry(entry)
-                        count++
-                    }
-                }
-            }
-        }
-
-        looseButton.setOnClickListener{
-            var entry = GameHistory()
-            entry.date = getCurrentDateTimeAsLong()
-            entry.score = 0.0f
-            entry.streak = 0
-            gameHistoryViewModel.insertEntry(entry)
-        }
 
         renderTotalScore()
         renderTotalGamesPlayed()
@@ -110,44 +51,49 @@ class StatisticsActivity : AppCompatActivity() {
         renderLongestStreak()
         renderZeroScoreGames()
         renderPerfectScore()
+        renderCurrentStreak()
     }
 
     private fun renderTotalScore() {
-        gameHistoryViewModel.getTotalScore().observe(this) {
+        gameHistoryViewModel.totalScoreLiveData.observe(this) {
             totalScoreStat.text = (it.toString())
         }
     }
     private fun renderTotalGamesPlayed() {
-        gameHistoryViewModel.getTotalGamesPlayed().observe(this) {
+        gameHistoryViewModel.totalGamesPlayedLiveData.observe(this) {
             totalGamesStat.text = (it.toString())
         }
     }
 
     private fun renderAvgScoreStat() {
-        gameHistoryViewModel.getAvgScore().observe(this) {
+        gameHistoryViewModel.avgScoreLiveData.observe(this) {
             avgScoreStat.text = it.toString()
         }
     }
 
     private fun renderLongestStreak() {
-        gameHistoryViewModel.getLongestStreak().observe(this) {
+        gameHistoryViewModel.longestStreakLiveData.observe(this) {
             longestStreakStat.text = it.toString()
         }
     }
 
     private fun renderZeroScoreGames() {
-        gameHistoryViewModel.getTotalZeroScoreGames().observe(this) {
+        gameHistoryViewModel.zeroScoredGamesLiveData.observe(this) {
             zeroScoreGamesStat.text = it.toString()
         }
     }
 
     private fun renderPerfectScore() {
-        gameHistoryViewModel.getPerfectScore().observe(this) {
+        gameHistoryViewModel.perfectScoredGamesLiveData.observe(this) {
             perfectGamesStat.text = it.toString()
         }
     }
 
-
+    private fun renderCurrentStreak() {
+        gameHistoryViewModel.currentStreakLiveData.observe(this) {
+            currentStreakStat.text = it.toString()
+        }
+    }
     private fun bindUIComponents() {
         totalGamesStat = findViewById(R.id.total_games_played_stat)
         totalScoreStat = findViewById(R.id.total_score_stat)
@@ -155,32 +101,8 @@ class StatisticsActivity : AppCompatActivity() {
         perfectGamesStat = findViewById(R.id.perfect_games_stat)
         longestStreakStat = findViewById(R.id.longest_streak_stat)
         zeroScoreGamesStat = findViewById(R.id.zero_score_games_stat)
-        winButton = findViewById(R.id.win_button)
-        looseButton = findViewById(R.id.loose_button)
-        perfectScoreButton = findViewById(R.id.perfect_score_btn)
+        currentStreakStat = findViewById(R.id.currentStreak)
     }
 
-    private fun initDatabase() {
-        gameHistoryDatabase = GameHistoryDb.getInstance(this)
-        gameHistoryDatabaseDao = gameHistoryDatabase.gameHistoryDbDao
-        gameHistoryRepository = GameHistoryRepository(gameHistoryDatabaseDao)
-        gameHistoryViewModelFactory = GameHistoryViewModel.GameHistoryViewModelFactory(gameHistoryRepository)
-        gameHistoryViewModel = ViewModelProvider(this, gameHistoryViewModelFactory).get(GameHistoryViewModel::class.java)
-        gameHistoryArrayList = ArrayList()
-        gameHistoryAdapter = GameHistoryAdapter(this, gameHistoryArrayList)
 
-        gameHistoryViewModel.allGameHistoryLiveData.observe(this) {
-            gameHistoryAdapter.replaceList(it)
-            gameHistoryAdapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun convertLongToDateTime(dateTimeAsLong: Long) : Date {
-        return Date(dateTimeAsLong)
-    }
-
-    private fun getCurrentDateTimeAsLong() : Long {
-        val dateTime: Date = Calendar.getInstance().time
-        return dateTime.time
-    }
 }

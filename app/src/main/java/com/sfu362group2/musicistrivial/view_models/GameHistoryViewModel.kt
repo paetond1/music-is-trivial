@@ -1,85 +1,73 @@
 package com.sfu362group2.musicistrivial.view_models
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.sfu362group2.musicistrivial.database.GameHistory
 import com.sfu362group2.musicistrivial.database.GameHistoryRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.*
+import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 class GameHistoryViewModel(private val repository: GameHistoryRepository) : ViewModel() {
+
     val allGameHistoryLiveData = repository.allEntries.asLiveData()
+    val lastEntryLiveData = repository.lastEntry.asLiveData()
+    val currentStreakLiveData = repository.currentStreak.asLiveData()
+    val totalScoreLiveData = repository.totalScore.asLiveData()
+    val longestStreakLiveData = repository.longestStreak.asLiveData()
+    val avgScoreLiveData = repository.avgScore.asLiveData()
+    val totalGamesPlayedLiveData = repository.totalGamesPlayed.asLiveData()
+    val perfectScoredGamesLiveData = repository.perfectScoredGames.asLiveData()
+    val zeroScoredGamesLiveData = repository.zeroScoredGames.asLiveData()
 
-    fun insertEntry(gameHistoryEntry: GameHistory) {
 
-        //TODO - Figure out how to get the find if yesterday (gameHistoryEntry.date - 1) has an entry.
-        // If it has an entry, get the streak from that entry and set this gameHistoryEntry streak to one higher
-//        Log.i("DEBUG: ", "score: ${gameHistoryEntry.score} date: ${gameHistoryEntry.date}")
-//        val streak = streakYesterday(gameHistoryEntry.date!!)
-//        Log.i("DEBUG: ", "STREAK BEFORE TODAY IS $streak")
-//        if (streak != null){
-//            gameHistoryEntry.streak = streak + 1
-//        }
-//        else{
-//            gameHistoryEntry.streak = 1
-//        }
-        repository.insertEntry(gameHistoryEntry)
+    fun insertEntry(gameHistoryEntry: GameHistory) = viewModelScope.launch {
+        var counter = 0
+        repository.lastEntry.collect() { previousEntry ->
+            if (previousEntry != null) {
+                if ((gameHistoryEntry.date?.minus(previousEntry.date!!))!! == 1L) {
+                    gameHistoryEntry.streak = previousEntry.streak + 1
+                } else {
+                    gameHistoryEntry.streak = 1
+                }
+                if (counter == 0)
+                    repository.insertEntry(gameHistoryEntry)
+                counter++
+            }
+            else {
+                gameHistoryEntry.streak = 1
+                counter++
+                repository.insertEntry(gameHistoryEntry)
+            }
+        }
     }
 
-//    private fun streakYesterday(todayDate : Long) : Int?{
-//        val entry = getHistoryEntry(todayDate - 1)
-//        return entry.value?.streak
-//    }
-
-    fun deleteEntry(id: Long) {
+    fun deleteEntry(id: Long) = viewModelScope.launch {
         repository.deleteEntry(id)
     }
 
-    fun deleteAllEntries() {
+    fun deleteAllEntries() = viewModelScope.launch{
         repository.deleteAllEntries()
     }
 
     fun getHistoryEntry(id: Long) : LiveData<GameHistory> {
-        return repository.getDailyEntry(id)
+        return repository.getDailyEntry(id).asLiveData()
     }
 
-    fun getCurrentStreak() : LiveData<Int> {
-        return repository.getCurrentStreak()
-    }
+}
 
-    fun getLongestStreak() : LiveData<Int> {
-        return repository.getLongestStreak()
-    }
+class GameHistoryViewModelFactory(private val repository: GameHistoryRepository)
+    : ViewModelProvider.Factory {
 
-    fun getTotalScore() : LiveData<Float> {
-        return repository.getTotalScore()
-    }
-
-    fun getAvgScore() : LiveData<Float> {
-        return repository.getAvgScore()
-    }
-
-    fun getTotalGamesPlayed() : LiveData<Int> {
-        return repository.getTotalGamesPlayed()
-    }
-
-    fun getTotalZeroScoreGames() : LiveData<Int> {
-        return repository.getTotalZeroScoreGames()
-    }
-    fun getPerfectScore() : LiveData<Int> {
-        return repository.getPerfectScore()
-    }
-
-
-
-    class GameHistoryViewModelFactory(private val repository: GameHistoryRepository)
-        : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(GameHistoryViewModel::class.java))
-                return GameHistoryViewModel(repository) as T
-            throw java.lang.IllegalArgumentException("Error")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(GameHistoryViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return GameHistoryViewModel(repository) as T
         }
+        throw java.lang.IllegalArgumentException("Unknown ViewModel Class")
     }
 }

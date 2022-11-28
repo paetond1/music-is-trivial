@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.adapters.SongListAdapter
 import com.sfu362group2.musicistrivial.database.GameHistory
@@ -17,6 +19,7 @@ import com.sfu362group2.musicistrivial.database.GameHistoryDbDao
 import com.sfu362group2.musicistrivial.database.GameHistoryRepository
 import com.sfu362group2.musicistrivial.game_logic.Game
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
 import com.sfu362group2.musicistrivial.view_models.GamePlayViewModel
 
 private const val TAG = "DEBUG: GamePlayActivity - "
@@ -31,11 +34,10 @@ class GamePlayActivity : AppCompatActivity() {
     private lateinit var inBundle: Bundle
     private lateinit var viewModel: GamePlayViewModel
 
-    private lateinit var gameHistoryDatabase: GameHistoryDb
-    private lateinit var gameHistoryDatabaseDao: GameHistoryDbDao
-    private lateinit var gameHistoryRepository: GameHistoryRepository
-    private lateinit var gameHistoryViewModel: GameHistoryViewModel
-    private lateinit var gameHistoryViewModelFactory: GameHistoryViewModel.GameHistoryViewModelFactory
+    // use this to access the database
+    private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
+        GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +59,7 @@ class GamePlayActivity : AppCompatActivity() {
         listView.adapter = listViewAdapter
         listView.setOnItemClickListener { parent, view, position, id -> songOnClick(position) }
 
-        // init database
-        initDatabase()
+
     }
 
     private fun initViewModel() {
@@ -92,7 +93,7 @@ class GamePlayActivity : AppCompatActivity() {
                         TAG,
                         "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}"
                     )
-//                    gameHistoryViewModel.insertEntry(entry)
+                    gameHistoryViewModel.insertEntry(entry)
                     val outBundle = Bundle()
                     outBundle.putString(
                         getString(R.string.bund_key_artist_name),
@@ -143,15 +144,5 @@ class GamePlayActivity : AppCompatActivity() {
         listViewAdapter.notifyDataSetChanged()
     }
 
-    private fun initDatabase() {
-        gameHistoryDatabase = GameHistoryDb.getInstance(this)
-        gameHistoryDatabaseDao = gameHistoryDatabase.gameHistoryDbDao
-        gameHistoryRepository = GameHistoryRepository(gameHistoryDatabaseDao)
-        gameHistoryViewModelFactory =
-            GameHistoryViewModel.GameHistoryViewModelFactory(gameHistoryRepository)
-        gameHistoryViewModel = ViewModelProvider(
-            this,
-            gameHistoryViewModelFactory
-        )[GameHistoryViewModel::class.java]
-    }
+
 }
