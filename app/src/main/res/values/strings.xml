@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Music is Trivial</string>
 
+    <!-- Facebook -->
+    <string name="FB_APP_ID">870512360634888</string>
+    <string name="FB_CLIENT_TOKEN">f0dc7022e0ace17212cde4024a3b67b4</string>
+    <string name="FB_PROVIDER">com.facebook.app.FacebookContentProvider870512360634888</string>
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
     <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>

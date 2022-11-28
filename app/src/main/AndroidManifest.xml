@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+    </queries>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicIsTrivial"
         tools:targetApi="31">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/FB_APP_ID"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/FB_CLIENT_TOKEN"/>
+        <provider android:authorities="@string/FB_PROVIDER"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
         <activity
             android:name=".activities.GameResultActivity"
             android:exported="false">
