@@ -1,182 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_margin="15dp"
     tools:context=".activities.GamePlayActivity">
-
-    <TextView
-        android:id="@+id/statistics_title"
-        android:text="Artist Name"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"/>
-
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/total_games_played_textview"
-            android:text="Total Games Played: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
+        android:layout_height="match_parent">
+
+        <!-- Header and Body -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/statistics_title"
+                android:text="@string/statistics_title"
+                android:theme="@style/title_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/total_games_played_textview"
+                    android:text="@string/stat_total_games_played"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/total_games_played_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/total_score_textview"
+                    android:text="@string/stat_total_score"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/total_score_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/average_score_textview"
+                    android:text="@string/stat_avg_score"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/average_score_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/perfect_games_textview"
+                    android:text="@string/stat_perfect_games"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/perfect_games_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/longest_streak_textview"
+                    android:text="@string/stat_longest_streak"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/longest_streak_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/zero_score_games_textview"
+                    android:text="@string/stat_zero_score_games"
+                    android:theme="@style/song_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" />
+                <TextView
+                    android:id='@+id/zero_score_games_stat'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/song_normal"
+                    android:text="40"/>
+            </LinearLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/button_to_home"
+            android:text="@string/home_button"
+            android:backgroundTint="@color/light_purple"
+            android:layout_weight="0"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <!-- TODO: remove these after testing -->
+        <Button
+            android:id="@+id/win_button"
+            android:text = "Win"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/total_games_played_stat'
+            />
+        <Button
+            android:id="@+id/loose_button"
+            android:text = "Loose"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
+            />
+        <Button
+            android:id="@+id/perfect_score_btn"
+            android:text = "Add perfect score"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/total_score_textview"
-            android:text="Total Score: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/total_score_stat'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/average_score_textview"
-            android:text="Average Score: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/average_score_stat'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/perfect_games_textview"
-            android:text="Perfect Games: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/perfect_games_stat'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/currentStreak_textView"
-            android:text="Current Streak: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/currentStreak'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/longest_streak_textview"
-            android:text="Longest Streak: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/longest_streak_stat'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/zero_score_games_textview"
-            android:text="Zero Score Games: "
-            android:background="@color/purple_200"
-            android:textSize="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id='@+id/zero_score_games_stat'
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:background="@color/purple_500"
-            android:text="40"/>
-
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/button_to_home"
-        android:text="Home"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
-
-
-</LinearLayout>
+</ScrollView>

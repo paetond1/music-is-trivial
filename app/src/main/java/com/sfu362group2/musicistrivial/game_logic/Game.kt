@@ -53,7 +53,7 @@ class Game(date: Long, artistName: String, allSongsInOrder: ArrayList<String>)  
         for (i in 0..4) {
             if (this.correctSongs[i] == submittedSongs[i]) {
                 detailedScore[i] = 1.0f
-            } else if (isInCorrectSongs(submittedSongs[i])) {
+            } else if (isInSubmittedSongs(correctSongs[i])) {
                 detailedScore[i] = 0.5f
             } else {
                 detailedScore[i] = 0.0f
@@ -71,6 +71,19 @@ class Game(date: Long, artistName: String, allSongsInOrder: ArrayList<String>)  
         }
     }
 
+
+    fun removeSongToSubmit(songTitle: String) {
+        if (this.submittedSongs.size == 0) {
+            Log.e(TAG, "No more song to remove.")
+        } else {
+            try {
+                submittedSongs.remove(songTitle)
+            } catch (e : Exception) {
+                Log.e(TAG, "Error removing song: ${e.message}")
+            }
+        }
+    }
+
     fun clearSubmittedSongs(){
         this.submittedSongs.clear()
     }
@@ -80,8 +93,8 @@ class Game(date: Long, artistName: String, allSongsInOrder: ArrayList<String>)  
         return this.date
     }
 
-    private fun isInCorrectSongs(song: String) : Boolean{
-        for (str in correctSongs){
+    private fun isInSubmittedSongs(song: String) : Boolean{
+        for (str in submittedSongs){
             if (song == str){
                 return true
             }

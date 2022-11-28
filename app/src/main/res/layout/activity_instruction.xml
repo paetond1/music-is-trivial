@@ -1,9 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15dp"
     tools:context=".activities.InstructionActivity">
+    <ScrollView
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title_instruction"
+                android:text="@string/instructions_title"
+                android:theme="@style/title_bold"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:id="@+id/general_subtitle"
+                android:text="@string/general_subtitle"
+                android:theme="@style/song_bold"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/general_description"
+                android:text="@string/general_desc"
+                android:theme="@style/song_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:id="@+id/gameplay_subtitle"
+                android:text="@string/gameplay_subtitle"
+                android:theme="@style/song_bold"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/gameplay_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gameplay_desc"
+                android:theme="@style/song_normal"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/scoring_subtitle"
+                android:text="@string/scoring_subtitle"
+                android:theme="@style/song_bold"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/scoring_description"
+                android:text="@string/scoring_desc"
+                android:theme="@style/song_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/home_button"
+        android:theme="@style/button_text"
+        android:backgroundTint="@color/light_purple"
+        android:text="@string/home_button"
+        android:layout_weight="0"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        />
+</LinearLayout>
