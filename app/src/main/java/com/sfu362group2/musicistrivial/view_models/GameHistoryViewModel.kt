@@ -32,14 +32,14 @@ class GameHistoryViewModel(private val repository: GameHistoryRepository) : View
                 if ((gameHistoryEntry.date?.minus(previousEntry.date!!))!! == 1L) {
                     gameHistoryEntry.streak = previousEntry.streak + 1
                 } else {
-
-                    gameHistoryEntry.streak = 0
+                    gameHistoryEntry.streak = 1
                 }
                 if (counter == 0)
                     repository.insertEntry(gameHistoryEntry)
                 counter++
             }
             else {
+                gameHistoryEntry.streak = 1
                 counter++
                 repository.insertEntry(gameHistoryEntry)
             }
