@@ -11,16 +11,27 @@
     <ImageView
         android:id="@+id/splash_logo"
         android:layout_weight="1"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <ImageView
-        android:id="@+id/powered_by_spotify"
+        app:srcCompat="@drawable/appicon" />
+    <LinearLayout
         android:layout_weight="8"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Powered by"
+            android:fontFamily="@font/free_sans"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <ImageView
+            android:id="@+id/powered_by_spotify"
+            app:srcCompat="@drawable/spotify_logo_cmyk_black"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+    </LinearLayout>
 </LinearLayout>
