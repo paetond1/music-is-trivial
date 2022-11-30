@@ -16,5 +16,7 @@
     <!-- game service -->
     <string name="game_service_default_web_client_id">594916045213-dibe3lrb6lbe2v0qfdn9kci2o0nabu9e.apps.googleusercontent.com</string>
     <string name="app_id">594916045213</string>
+    <string name="leaderboard_id">CgkIneOJnqgREAIQAg</string>
+
 
 </resources>

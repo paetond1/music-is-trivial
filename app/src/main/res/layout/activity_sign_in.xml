@@ -6,27 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignInActivity">
 
+
     <Button
-        android:text="google Sign In"
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="play games Sign In"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="0.244" />
 
     <Button
-        android:id="@+id/play_game_button"
+        android:id="@+id/achievement_button"
+        android:text="Achievements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="play game sign in"
         app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/leaderboard_button"
+        android:text="Leaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/achievement_button"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/achievement_button"
+        app:layout_constraintTop_toBottomOf="@+id/achievement_button"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/sign_out"
+        android:text="Sign out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/leaderboard_button"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/leaderboard_button"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboard_button"
+        android:layout_marginTop="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

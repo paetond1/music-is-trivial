@@ -20,13 +20,6 @@
             android:value="@string/app_id"/>
 
         <activity
-            android:name=".activities.GoogleSignInActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.SignInActivity"
             android:exported="false">
             <meta-data
