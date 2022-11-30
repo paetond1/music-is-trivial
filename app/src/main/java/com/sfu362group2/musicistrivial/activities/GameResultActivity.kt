@@ -11,6 +11,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.facebook.share.model.ShareHashtag
 import com.facebook.share.model.ShareLinkContent
 import com.facebook.share.model.SharePhoto
@@ -18,6 +23,7 @@ import com.facebook.share.model.SharePhotoContent
 import com.facebook.share.widget.ShareDialog
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.view_models.GameResultViewModel
+import java.util.*
 
 
 class GameResultActivity : AppCompatActivity() {
@@ -36,6 +42,7 @@ class GameResultActivity : AppCompatActivity() {
     private lateinit var callbackManager: CallbackManager
     private lateinit var inBundle: Bundle
     private lateinit var viewModel: GameResultViewModel
+    private lateinit var fbLoginBtn: LoginButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +58,38 @@ class GameResultActivity : AppCompatActivity() {
         // Facebook ShareDialog
         callbackManager = CallbackManager.Factory.create()
         shareDialog = ShareDialog(this)
+        fbLoginBtn = findViewById(R.id.button_login_with_Facebook)
+        val EMAIL:String = "email";
+        fbLoginBtn.setReadPermissions(Arrays.asList(EMAIL));
+        // Callback registration
+        // Callback registration
+        fbLoginBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(result: LoginResult?) {
+                // App code
+            }
+
+            override fun onCancel() {
+                // App code
+            }
+
+            override fun onError(exception: FacebookException) {
+                // App code
+            }
+        })
+        LoginManager.getInstance().registerCallback(callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+
+                }
+
+                override fun onCancel() {
+                    // App code
+                }
+
+                override fun onError(exception: FacebookException) {
+                    // App code
+                }
+            })
 
         shareToFbButton = findViewById(R.id.button_share_to_Facebook)
         shareToFbButton.setOnClickListener { shareToFacebook() }
