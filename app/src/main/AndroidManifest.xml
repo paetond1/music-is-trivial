@@ -20,9 +20,12 @@
         tools:targetApi="31">
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/FB_APP_ID"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/FB_CLIENT_TOKEN"/>
-        <provider android:authorities="@string/FB_PROVIDER"
+
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider3287063198241052"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" />
+            android:exported="true"/>
+
         <activity
             android:name=".activities.GameResultActivity"
             android:exported="false">

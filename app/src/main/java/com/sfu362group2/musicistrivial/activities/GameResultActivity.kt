@@ -1,5 +1,7 @@
 package com.sfu362group2.musicistrivial.activities
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
@@ -53,7 +55,20 @@ class GameResultActivity : AppCompatActivity() {
         shareToFbButton = findViewById(R.id.button_share_to_Facebook)
         shareToFbButton.setOnClickListener { shareToFacebook() }
 
+        if (!isPackageInstalled("com.facebook.katana", this)) {
+            shareToFbButton.visibility = View.GONE
+        }
 
+    }
+
+    fun isPackageInstalled(packageName: String, context: Context): Boolean {
+        return try {
+            val packageManager = context.packageManager
+            packageManager.getPackageInfo(packageName, 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
     }
     private fun initTextViews(){
         artistName = findViewById(R.id.artist_name)

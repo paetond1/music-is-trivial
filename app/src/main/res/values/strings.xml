@@ -2,8 +2,8 @@
     <string name="app_name">Music is Trivial</string>
 
     <!-- Facebook -->
-    <string name="FB_APP_ID">870512360634888</string>
-    <string name="FB_CLIENT_TOKEN">f0dc7022e0ace17212cde4024a3b67b4</string>
+    <string name="FB_APP_ID">3287063198241052</string>
+    <string name="FB_CLIENT_TOKEN">79258ec442c9fcef4264d455a87f5858</string>
     <string name="FB_PROVIDER">com.facebook.app.FacebookContentProvider870512360634888</string>
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
