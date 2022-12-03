@@ -41,7 +41,7 @@
 
     <!--    Statistics      -->
     <string name="statistics_title">Statistics</string>
-    <string name="stat_total_games_played">Total Games Played:1\ </string>
+    <string name="stat_total_games_played">Total Games Played:\ </string>
     <string name="stat_total_score">Total Score:\ </string>
     <string name="stat_avg_score">Average Score:\ </string>
     <string name="stat_perfect_games">Perfect Games:\ </string>
@@ -63,5 +63,7 @@
     <string name="alert_submission_message">Please rank exactly 5 songs, then press submit.</string>
     <string name="alert_play_title">You have Already Played Today\!</string>
     <string name="alert_play_message">You can only play once each day\! Play again tomorrow for a different artist\!</string>
+    <string name="alert_network_title">Network Error</string>
+    <string name="alert_network_message">There was an error loading from Spotify\! Please ensure your internet connection is working and restart the app.</string>
 
 </resources>
