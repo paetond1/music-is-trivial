@@ -2,6 +2,7 @@
     <string name="app_name">Music is Trivial</string>
     <string name="SHARED_PREF_KEY">com.sfu362group2.musicistrivial.PREF_FILE_KEY</string>
     <string name="LAST_PLAYED_DATE_KEY">LAST_PLAYED_DATE</string>
+    <string name="LAST_SCORE_KEY">LAST_SCORE_KEY</string>
 
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>

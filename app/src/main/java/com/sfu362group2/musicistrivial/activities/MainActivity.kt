@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -61,8 +62,6 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        todaysScoreMessage = findViewById(R.id.todays_score_message)
-
         instructionButton = findViewById(R.id.button_instructions)
         instructionButton.setOnClickListener {
             val i = Intent(this, InstructionActivity::class.java)
@@ -87,11 +86,8 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         if (viewModel.date.value != LocalDate.now().toEpochDay()) {
             viewModel.spotifyCalls(spotify, queue)
         }
-        // TODO: Update the message based on whether the user has played already today
-        if (sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L) == viewModel.date.value){
-            todaysScoreMessage.text = ""
-        }
         initPlayButton()
+        initScore()
     }
 
     private fun gameBundle(): Bundle {
@@ -118,15 +114,19 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         }
     }
 
-    private fun initPlayButton(){
+    private fun initPlayButton() {
         playButton = findViewById(R.id.button_play)
-        // TODO : Render streak
-        if (sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L) == viewModel.date.value){
+        if (sharedPreferences.getLong(
+                getString(R.string.LAST_PLAYED_DATE_KEY),
+                -1L
+            ) == viewModel.date.value
+        ) {
             playButton.setBackgroundColor(getColor(R.color.greyed_out))
         }
         playButton.setOnClickListener {
-            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
-            if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!! ){
+            val lastPlayedDate =
+                sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
+            if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!!) {
                 alertAlreadyPlayed()
             } else {
                 val i = Intent(this, GamePlayActivity::class.java)
@@ -141,6 +141,23 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
             getString(R.string.SHARED_PREF_KEY),
             Context.MODE_PRIVATE
         )
+    }
+
+    private fun initScore() {
+        todaysScoreMessage = findViewById(R.id.todays_score_message)
+        if (sharedPreferences.getLong(
+                getString(R.string.LAST_PLAYED_DATE_KEY),
+                -1L
+            ) == viewModel.date.value
+        ) {
+            todaysScoreMessage.text = getString(
+                R.string.result_message,
+                sharedPreferences.getFloat(getString(R.string.LAST_SCORE_KEY), -1F)
+            )
+            todaysScoreMessage.visibility = View.VISIBLE
+        } else {
+            todaysScoreMessage.visibility = View.GONE
+        }
     }
 
     override fun shouldKeepOnScreen(): Boolean {

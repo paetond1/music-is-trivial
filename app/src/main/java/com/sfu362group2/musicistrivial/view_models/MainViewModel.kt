@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
     val artistId = MutableLiveData<String>()
     val allSongsInOrder = MutableLiveData<ArrayList<String>>(ArrayList())
 
-    fun setdate() {
+    private fun setdate() {
         date.value = LocalDate.now().toEpochDay()
     }
 

@@ -107,6 +107,7 @@ class GamePlayActivity : AppCompatActivity() {
                     gameHistoryViewModel.insertEntry(entry)
                     editor.apply {
                         putLong(getString(R.string.LAST_PLAYED_DATE_KEY), entry.date!!)
+                        putFloat(getString(R.string.LAST_SCORE_KEY), entry.score)
                     }.apply()
                     val outBundle = Bundle()
                     outBundle.putString(
