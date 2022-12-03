@@ -62,22 +62,6 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         setContentView(R.layout.activity_main)
 
         todaysScoreMessage = findViewById(R.id.todays_score_message)
-        // TODO: Update the message based on whether the user has played already today
-        // todaysScoreMessage.text = ""
-
-        playButton = findViewById(R.id.button_play)
-        // TODO : Render streak
-        // TODO : Change Button's background color to R.colors.greyed_out if already played today
-        playButton.setOnClickListener {
-            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
-            if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!! ){
-                alertAlreadyPlayed()
-            } else {
-                val i = Intent(this, GamePlayActivity::class.java)
-                i.putExtras(gameBundle())
-                startActivity(i)
-            }
-        }
 
         instructionButton = findViewById(R.id.button_instructions)
         instructionButton.setOnClickListener {
@@ -103,6 +87,11 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         if (viewModel.date.value != LocalDate.now().toEpochDay()) {
             viewModel.spotifyCalls(spotify, queue)
         }
+        // TODO: Update the message based on whether the user has played already today
+        if (sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L) == viewModel.date.value){
+            todaysScoreMessage.text = ""
+        }
+        initPlayButton()
     }
 
     private fun gameBundle(): Bundle {
@@ -126,6 +115,24 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
             Picasso.get()
                 .load(viewModel.artistImgUrl.value)
                 .into(artistImg)
+        }
+    }
+
+    private fun initPlayButton(){
+        playButton = findViewById(R.id.button_play)
+        // TODO : Render streak
+        if (sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L) == viewModel.date.value){
+            playButton.setBackgroundColor(getColor(R.color.greyed_out))
+        }
+        playButton.setOnClickListener {
+            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
+            if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!! ){
+                alertAlreadyPlayed()
+            } else {
+                val i = Intent(this, GamePlayActivity::class.java)
+                i.putExtras(gameBundle())
+                startActivity(i)
+            }
         }
     }
 
