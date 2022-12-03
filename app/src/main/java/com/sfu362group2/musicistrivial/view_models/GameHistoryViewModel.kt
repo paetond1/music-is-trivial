@@ -1,16 +1,10 @@
 package com.sfu362group2.musicistrivial.view_models
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.sfu362group2.musicistrivial.database.GameHistory
 import com.sfu362group2.musicistrivial.database.GameHistoryRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.util.*
-import kotlin.system.measureTimeMillis
-import kotlin.time.measureTime
 
 class GameHistoryViewModel(private val repository: GameHistoryRepository) : ViewModel() {
 
@@ -27,7 +21,7 @@ class GameHistoryViewModel(private val repository: GameHistoryRepository) : View
 
     fun insertEntry(gameHistoryEntry: GameHistory) = viewModelScope.launch {
         var counter = 0
-        repository.lastEntry.collect() { previousEntry ->
+        repository.lastEntry.collect { previousEntry ->
             if (previousEntry != null) {
                 if ((gameHistoryEntry.date?.minus(previousEntry.date!!))!! == 1L) {
                     gameHistoryEntry.streak = previousEntry.streak + 1
