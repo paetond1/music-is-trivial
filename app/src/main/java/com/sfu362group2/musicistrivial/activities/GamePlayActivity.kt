@@ -61,8 +61,6 @@ class GamePlayActivity : AppCompatActivity() {
         listViewAdapter = SongListAdapter(this, viewModel.game.value!!.getSongOptions())
         listView.adapter = listViewAdapter
         listView.setOnItemClickListener { parent, view, position, id -> songOnClick(position) }
-
-
     }
 
     private fun initViewModel() {
@@ -163,7 +161,7 @@ class GamePlayActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.alert_submission_title))
         builder.setMessage(getString(R.string.alert_submission_message))
-        builder.setPositiveButton(getString(R.string.alert_positive)) { dialog, which ->
+        builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
         }
         builder.show()
     }

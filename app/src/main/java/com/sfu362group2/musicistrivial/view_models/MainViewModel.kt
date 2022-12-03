@@ -14,6 +14,7 @@ class MainViewModel : ViewModel() {
     val artistName = MutableLiveData<String>()
     val artistId = MutableLiveData<String>()
     val allSongsInOrder = MutableLiveData<ArrayList<String>>(ArrayList())
+    val isRequestErrors = MutableLiveData(false)
 
     private fun setdate() {
         date.value = LocalDate.now().toEpochDay()
@@ -23,33 +24,33 @@ class MainViewModel : ViewModel() {
         setdate()
         allSongsInOrder.value!!.clear()
         // Search request spotify for a random artist and get their id
-        queue.add(spotify.tokenRequest { response ->
+        queue.add(spotify.tokenRequest({ response ->
             val token = response.getString("access_token")
             queue.add(
                 spotify.randomArtistRequest(
                     token,
-                    randChar(date.value!!)
-                ) { response ->
+                    randChar(date.value!!),
+                 { response ->
                     // Request artist name and image
                     val id =
                         response.getJSONObject("artists").getJSONArray("items")
                             .getJSONObject(randInt(date.value!!))
                             .getString("id")
                     artistId.value = id
-                    queue.add(spotify.artistRequest(token, id) { response ->
+                    queue.add(spotify.artistRequest(token, id, { response ->
                         artistName.value = response.getString("name")
                         artistImgUrl.value =
                             response.getJSONArray("images").getJSONObject(0).getString("url")
-                    })
+                    }, {this.isRequestErrors.value = true}))
                     // Request top tracks
-                    queue.add(spotify.topTracksRequest(token, id) { response ->
+                    queue.add(spotify.topTracksRequest(token, id, { response ->
                         val tracks = response.getJSONArray("tracks")
                         for (i in 0..9) {
                             allSongsInOrder.value!!.add(tracks.getJSONObject(i).getString("name"))
                         }
-                    })
-                })
-        })
+                    }, {this.isRequestErrors.value = true}))
+                }, {this.isRequestErrors.value = true}))
+        }, {this.isRequestErrors.value = true}))
     }
 
     /*

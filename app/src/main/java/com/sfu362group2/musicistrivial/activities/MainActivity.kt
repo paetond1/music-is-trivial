@@ -110,6 +110,11 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
                     }
                 })
         }
+        viewModel.isRequestErrors.observe(this){
+            if (it){
+                alertNetworkError()
+            }
+        }
     }
 
     private fun initPlayButton() {
@@ -128,7 +133,11 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
                 sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
             if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!!) {
                 alertAlreadyPlayed()
-            } else {
+            }
+            else if(viewModel.isRequestErrors.value!!){
+                alertNetworkError()
+            }
+            else {
                 val i = Intent(this, GamePlayActivity::class.java)
                 i.putExtras(gameBundle())
                 startActivity(i)
@@ -163,7 +172,11 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
     override fun shouldKeepOnScreen(): Boolean {
         // TODO: fetch Spotify API before loading
         Log.i(TAG, "Calling shouldKeepOnScreen")
-        return !imgLoaded.get()
+        return if (viewModel.isRequestErrors.value!!){
+            false
+        } else {
+            !imgLoaded.get()
+        }
 
     }
 
@@ -171,7 +184,16 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.alert_play_title))
         builder.setMessage(getString(R.string.alert_play_message))
-        builder.setPositiveButton(getString(R.string.alert_positive)) { dialog, which ->
+        builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
+        }
+        builder.show()
+    }
+
+    private fun alertNetworkError(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.alert_network_title))
+        builder.setMessage(getString(R.string.alert_network_message))
+        builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
         }
         builder.show()
     }

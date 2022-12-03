@@ -19,7 +19,10 @@ class Spotify(context: Context) {
         this.clientCredentials = getSpotifyCredentials()
     }
 
-    fun tokenRequest(onSuccess: (jsonObj: JSONObject) -> Unit): JsonObjectRequest {
+    fun tokenRequest(
+        onSuccess: (jsonObj: JSONObject) -> Unit,
+        onError: () -> Unit
+    ): JsonObjectRequest {
         val tokenRequest: JsonObjectRequest = object : JsonObjectRequest(
             Method.POST,
             context.getString(R.string.spotify_token_url),
@@ -31,9 +34,10 @@ class Spotify(context: Context) {
             Response.ErrorListener { error ->
                 Log.e(
                     TAG,
-                    "tokenRequest failed with status code ${error.networkResponse.statusCode}"
+                    "tokenRequest failed with status code ${error.networkResponse?.statusCode}"
                 )
                 Log.e(TAG, "tokenRequest failure message: ${error.message}")
+                onError()
             }) {
             override fun getHeaders(): Map<String, String> {
                 val authHeaderVal =
@@ -55,7 +59,8 @@ class Spotify(context: Context) {
     fun artistRequest(
         token: String,
         artistId: String,
-        onSuccess: (jsonObj: JSONObject) -> Unit
+        onSuccess: (jsonObj: JSONObject) -> Unit,
+        onError: () -> Unit
     ): JsonObjectRequest {
         val artistRequest = object : JsonObjectRequest(
             Method.GET,
@@ -70,6 +75,7 @@ class Spotify(context: Context) {
                     "artistRequest failed with status code ${error.networkResponse.statusCode}"
                 )
                 Log.e(TAG, "artistRequest failure message: ${error.message}")
+                onError()
             }) {
             override fun getHeaders(): Map<String, String> {
                 return getJSONHeaders(token)
@@ -81,7 +87,8 @@ class Spotify(context: Context) {
     fun topTracksRequest(
         token: String,
         artistId: String,
-        onSuccess: (jsonObj: JSONObject) -> Unit
+        onSuccess: (jsonObj: JSONObject) -> Unit,
+        onError: () -> Unit
     ): JsonObjectRequest {
         val topSongsRequest = object : JsonObjectRequest(
             Method.GET,
@@ -95,6 +102,7 @@ class Spotify(context: Context) {
                     "topTracksRequest failed with status code ${error.networkResponse.statusCode}"
                 )
                 Log.e(TAG, "topTracksRequest failure message: ${error.message}")
+                onError()
             }) {
             override fun getHeaders(): Map<String, String> {
                 return getJSONHeaders(token)
@@ -105,7 +113,8 @@ class Spotify(context: Context) {
 
     fun randomArtistRequest(
         token: String, char: Char,
-        onSuccess: (jsonObj: JSONObject) -> Unit
+        onSuccess: (jsonObj: JSONObject) -> Unit,
+        onError: () -> Unit
     ): JsonObjectRequest {
         val url = "https://api.spotify.com/v1/search?q=$char%25&type=artist&market=CA&limit=20"
         val request = object : JsonObjectRequest(
@@ -121,6 +130,7 @@ class Spotify(context: Context) {
                     "searchRequest failed with status code ${error.networkResponse.statusCode}"
                 )
                 Log.e(TAG, "searchRequest failure message: ${error.message}")
+                onError()
             }) {
             override fun getHeaders(): Map<String, String> {
                 return getJSONHeaders(token)
