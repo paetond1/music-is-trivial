@@ -76,7 +76,7 @@ class GamePlayViewModel : ViewModel() {
             }
             game.value!!.submitSongs()
         } else{
-            Log.d(TAG, "submitSongs() returned null")
+
             null
         }
     }

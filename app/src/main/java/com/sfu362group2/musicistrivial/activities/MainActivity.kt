@@ -1,21 +1,31 @@
 package com.sfu362group2.musicistrivial.activities
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
+
+private const val TAG = "DEBUG: MainActivity - "
 
 class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
 
@@ -30,15 +40,19 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
     private lateinit var spotify: Spotify
     private lateinit var viewModel: MainViewModel
     private lateinit var todaysScoreMessage: TextView
+    private lateinit var sharedPreferences: SharedPreferences
+
+    // use this to access the database
+    private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
+        GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         initViewModel()
+        initSharedPref()
         spotify = Spotify(this)
         queue = Volley.newRequestQueue(this)
-//        if (viewModel.date.value != LocalDate.now().toEpochDay()) {
-//            viewModel.spotifyCalls(spotify, queue)
-//        }
+
 
         // Do not move installSplashScreen(). Must be before super.onCreate() and setContentView()
         splashScreen = installSplashScreen()
@@ -55,11 +69,14 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         // TODO : Render streak
         // TODO : Change Button's background color to R.colors.greyed_out if already played today
         playButton.setOnClickListener {
-            // TODO : Add logic to check that the day has not been played already
-
-            val i = Intent(this, GamePlayActivity::class.java)
-            i.putExtras(gameBundle())
-            startActivity(i)
+            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
+            if (lastPlayedDate != -1L && lastPlayedDate == viewModel.date.value!! ){
+                alertAlreadyPlayed()
+            } else {
+                val i = Intent(this, GamePlayActivity::class.java)
+                i.putExtras(gameBundle())
+                startActivity(i)
+            }
         }
 
         instructionButton = findViewById(R.id.button_instructions)
@@ -78,9 +95,6 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
 //        artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
 
-//        initViewModel()
-//        spotify = Spotify(this)
-//        queue = Volley.newRequestQueue(this)
 
     }
 
@@ -115,9 +129,25 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         }
     }
 
+    private fun initSharedPref() {
+        sharedPreferences = this.getSharedPreferences(
+            getString(R.string.SHARED_PREF_KEY),
+            Context.MODE_PRIVATE
+        )
+    }
+
     override fun shouldKeepOnScreen(): Boolean {
         // TODO: fetch Spotify API before loading
         return viewModel.artistImgUrl.value == null
 
+    }
+
+    private fun alertAlreadyPlayed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.alert_play_title))
+        builder.setMessage(getString(R.string.alert_play_message))
+        builder.setPositiveButton(getString(R.string.alert_positive)) { dialog, which ->
+        }
+        builder.show()
     }
 }
