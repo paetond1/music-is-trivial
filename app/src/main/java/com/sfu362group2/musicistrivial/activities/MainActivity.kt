@@ -10,21 +10,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
-import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
-import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.time.LocalDate
+import java.util.concurrent.atomic.AtomicBoolean
 
 private const val TAG = "DEBUG: MainActivity - "
 
@@ -42,11 +40,7 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
     private lateinit var viewModel: MainViewModel
     private lateinit var todaysScoreMessage: TextView
     private lateinit var sharedPreferences: SharedPreferences
-
-    // use this to access the database
-    private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
-        GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
-    }
+    private val imgLoaded = AtomicBoolean()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel()
@@ -110,7 +104,11 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         viewModel.artistImgUrl.observe(this) {
             Picasso.get()
                 .load(viewModel.artistImgUrl.value)
-                .into(artistImg)
+                .into(artistImg, object: Callback.EmptyCallback() {
+                    override fun onSuccess(){
+                        imgLoaded.set(true)
+                    }
+                })
         }
     }
 
@@ -122,6 +120,8 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
             ) == viewModel.date.value
         ) {
             playButton.setBackgroundColor(getColor(R.color.greyed_out))
+        } else {
+            playButton.setBackgroundColor(getColor(R.color.light_purple))
         }
         playButton.setOnClickListener {
             val lastPlayedDate =
@@ -162,7 +162,8 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
 
     override fun shouldKeepOnScreen(): Boolean {
         // TODO: fetch Spotify API before loading
-        return viewModel.artistImgUrl.value == null
+        Log.i(TAG, "Calling shouldKeepOnScreen")
+        return !imgLoaded.get()
 
     }
 
