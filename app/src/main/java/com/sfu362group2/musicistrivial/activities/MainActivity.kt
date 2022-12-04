@@ -21,6 +21,7 @@ import com.sfu362group2.musicistrivial.api.Spotify
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -99,16 +100,26 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
     private fun initViewModel() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.artistName.observe(this) {
-            artistName.text = viewModel.artistName.value
+            artistName.text = it
+            Log.i(TAG, "Observing artists name: ${it}")
         }
         viewModel.artistImgUrl.observe(this) {
-            Picasso.get()
+            Log.i(TAG, "Observing artists url: ${it}")
+            val x = Picasso.get()
                 .load(viewModel.artistImgUrl.value)
                 .into(artistImg, object: Callback.EmptyCallback() {
                     override fun onSuccess(){
+                        Log.i(TAG, "Artist Image Loaded successfully")
                         imgLoaded.set(true)
                     }
+                    override fun onError(e: Exception?) {
+                        super.onError(e)
+                        Log.e(TAG, "Error loading photo ${e?.message}")
+                        imgLoaded.set(true)
+                        alertNetworkError()
+                    }
                 })
+            Log.i(TAG, "x is $x")
         }
         viewModel.isRequestErrors.observe(this){
             if (it){
