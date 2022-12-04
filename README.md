@@ -9,11 +9,11 @@ Music is Trivial is an Android trivia game app to be played once a day just like
 A user will open the app and see an artist. The gameplay involves a list of the most played songs for that artist from Spotify. The user must select what they think are the 5 most listened songs of that artist. Using Spotify's API, we will compare their choices to the 5 most listened songs from Spotify and output how many correct choices were made. The next day, users may play again for a different artist, similar to Wordle. All users get the same music artist every day. Results are optionally shared on social media or using Google Play Games Services API.
 
 ## Links
-[**Prototype**](https://miro.com/app/board/uXjVPHCNYA8=/)
-[**Project Pitch**](https://youtu.be/lnMhmHPjxhY)
-[**Show and Tell 1**](https://youtu.be/Q_0CcpiQyOk)
-[**Show and Tell 2**](https://www.youtube.com/watch?v=XXoiEawpZss)
-[Threading Diagram](https://docs.google.com/presentation/d/1_73l_FN74rvnzgC2XM60nbXAgu9R69Dn1lbByXkNczc/edit?usp=sharing)
+*[**Prototype**](https://miro.com/app/board/uXjVPHCNYA8=/)
+*[**Project Pitch**](https://youtu.be/lnMhmHPjxhY)
+*[**Show and Tell 1**](https://youtu.be/Q_0CcpiQyOk)
+*[**Show and Tell 2**](https://www.youtube.com/watch?v=XXoiEawpZss)
+*[Threading Diagram](https://docs.google.com/presentation/d/1_73l_FN74rvnzgC2XM60nbXAgu9R69Dn1lbByXkNczc/edit?usp=sharing)
 
 ## Work Division
 * Abay Kuamkadyr - Database, Statistics, Facebook integration
