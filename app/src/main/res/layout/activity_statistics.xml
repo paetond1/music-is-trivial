@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     tools:context=".activities.GamePlayActivity">
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_weight="1"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <!-- Header and Body -->
         <LinearLayout
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/statistics_title"
@@ -160,39 +160,18 @@
                     android:text="40"/>
             </LinearLayout>
         </LinearLayout>
-        <Button
-            android:id="@+id/button_to_home"
-            android:text="@string/home_button"
-            android:backgroundTint="@color/light_purple"
-            android:layout_weight="0"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
-
-        <!-- TODO: remove these after testing -->
-        <Button
-            android:id="@+id/win_button"
-            android:text = "Win"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-        <Button
-            android:id="@+id/loose_button"
-            android:text = "Loose"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-        <Button
-            android:id="@+id/perfect_score_btn"
-            android:text = "Add perfect score"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+    <Button
+        android:id="@+id/button_to_home"
+        android:theme="@style/button_text"
+        android:backgroundTint="@color/light_purple"
+        android:text="@string/home_button"
+        android:layout_weight="0"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_width="wrap_content"
+        android:minWidth="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        />
+</LinearLayout>

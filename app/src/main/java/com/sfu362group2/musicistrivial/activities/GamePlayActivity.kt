@@ -158,7 +158,7 @@ class GamePlayActivity : AppCompatActivity() {
     }
 
     private fun alertNotEnoughSelections() {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogCustom)
         builder.setTitle(getString(R.string.alert_submission_title))
         builder.setMessage(getString(R.string.alert_submission_message))
         builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
