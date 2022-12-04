@@ -16,7 +16,7 @@ A user will open the app and see an artist. The gameplay involves a list of the 
 * [Threading Diagram](https://docs.google.com/presentation/d/1_73l_FN74rvnzgC2XM60nbXAgu9R69Dn1lbByXkNczc/edit?usp=sharing)
 
 ## Work Division
-* Abay Kuamkadyr - Database, Statistics, Facebook integration
+* Abay Kulamkadyr - Room Database, Statistics, Facebook integration
 * Alex Cheung - Google Achievements integration
 * Paeton Dhesi - Spotify integration, game logic, prototyping, error handling
 * Peter Fan - UI/UX, Facebook integration
