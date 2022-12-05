@@ -31,7 +31,7 @@
     <!--    MainActivity    -->
     <string name="todays_artist">Today\'s Artist</string>
     <string name="artist_name">Artist Name</string>
-    <string name="default_streak_message">Current Streak: 0 days</string>
+    <string name="streak_message">Current Streak: %1$d days</string>
 
     <!--    GamePlayActivity    -->
     <string name="gameplay_instruction">Pick their 5 most played songs in order.</string>

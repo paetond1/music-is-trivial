@@ -84,9 +84,7 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
 //        artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
         currentGameStreak = findViewById(R.id.game_streak_message)
-        gameHistoryViewModel.currentStreakLiveData.observe(this) {
-            currentGameStreak.text = if ( it!= null) "Current Streak: ${it.toString()}" else "Current Streak: 0"
-        }
+        initStreak()
     }
 
     override fun onResume() {
@@ -220,5 +218,14 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
         }
         builder.show()
+    }
+
+    private fun initStreak(){
+        gameHistoryViewModel.currentStreakLiveData.observe(this) {
+            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
+            val isStreakActive = (it != null) && (lastPlayedDate >= viewModel.date.value!! - 1)
+            val streak = if (isStreakActive) it else 0
+            currentGameStreak.text = getString(R.string.streak_message, streak)
+        }
     }
 }

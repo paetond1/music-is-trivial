@@ -1,20 +1,18 @@
 package com.sfu362group2.musicistrivial.activities
 
-import androidx.appcompat.app.AppCompatActivity
+
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
-import com.sfu362group2.musicistrivial.database.GameHistory
-import com.sfu362group2.musicistrivial.game_logic.Game
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
 import java.time.LocalDate
-
-
-import java.util.*
 
 
 class StatisticsActivity : AppCompatActivity() {
@@ -29,6 +27,7 @@ class StatisticsActivity : AppCompatActivity() {
     private lateinit var longestStreakStat: TextView
     private lateinit var zeroScoreGamesStat: TextView
     private lateinit var currentStreakStat: TextView
+    private lateinit var sharedPreferences: SharedPreferences
 
     // use this to access the database
     private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
@@ -38,6 +37,7 @@ class StatisticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
+        initSharedPref()
 
         homeButton = findViewById(R.id.button_to_home)
         homeButton.setOnClickListener {
@@ -90,7 +90,10 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun renderCurrentStreak() {
         gameHistoryViewModel.currentStreakLiveData.observe(this) {
-            currentStreakStat.text = it?.toString() ?: "0"
+            val lastPlayedDate = sharedPreferences.getLong(getString(R.string.LAST_PLAYED_DATE_KEY), -1L)
+            val isStreakActive = (it != null) && (lastPlayedDate >= LocalDate.now().toEpochDay() - 1)
+            val streak = if (isStreakActive) it else 0
+            currentStreakStat.text = streak.toString()
         }
     }
 
@@ -103,4 +106,12 @@ class StatisticsActivity : AppCompatActivity() {
         zeroScoreGamesStat = findViewById(R.id.zero_score_games_stat)
         currentStreakStat = findViewById(R.id.currentStreak)
     }
+
+    private fun initSharedPref(){
+            sharedPreferences = this.getSharedPreferences(
+                getString(R.string.SHARED_PREF_KEY),
+                Context.MODE_PRIVATE
+            )
+        }
+
 }
