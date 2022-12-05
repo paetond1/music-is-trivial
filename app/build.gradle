@@ -6,6 +6,9 @@ plugins {
 
     //for the room database kapt
     id "org.jetbrains.kotlin.kapt"
+
+    //for hiding API keys
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -71,5 +74,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
     androidTestImplementation "androidx.room:room-testing:2.4.3"
 
-
+    // Facebook Sharing SDK
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    implementation 'com.facebook.android:facebook-share:latest.release'
 }

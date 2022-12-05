@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
+                android:id="@+id/game_result_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -99,7 +100,7 @@
                 <Button
                     android:id="@+id/button_share_to_Facebook"
                     android:theme="@style/button_text"
-                    android:backgroundTint="@color/dark_purple"
+                    android:backgroundTint="@color/com_facebook_blue"
                     android:text="@string/share_to_facebook_button"
                     android:layout_width="match_parent"
                     android:minHeight="60dp"

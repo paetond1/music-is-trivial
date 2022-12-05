@@ -4,6 +4,10 @@
     <string name="LAST_PLAYED_DATE_KEY">LAST_PLAYED_DATE</string>
     <string name="LAST_SCORE_KEY">LAST_SCORE_KEY</string>
 
+    <!-- Facebook -->
+    <string name="FB_APP_ID">870512360634888</string>
+    <string name="FB_CLIENT_TOKEN">f0dc7022e0ace17212cde4024a3b67b4</string>
+    <string name="FB_PROVIDER">com.facebook.app.FacebookContentProvider870512360634888</string>
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
     <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>
