@@ -44,7 +44,6 @@ class StatisticsActivity : AppCompatActivity() {
             finish()
         }
         bindUIComponents()
-
         renderTotalScore()
         renderTotalGamesPlayed()
         renderAvgScoreStat()
@@ -56,7 +55,7 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun renderTotalScore() {
         gameHistoryViewModel.totalScoreLiveData.observe(this) {
-            totalScoreStat.text = (it.toString())
+            totalScoreStat.text = it?.toString() ?: "0"
         }
     }
     private fun renderTotalGamesPlayed() {
@@ -67,13 +66,13 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun renderAvgScoreStat() {
         gameHistoryViewModel.avgScoreLiveData.observe(this) {
-            avgScoreStat.text = it.toString()
+            avgScoreStat.text = it?.toString() ?: "0"
         }
     }
 
     private fun renderLongestStreak() {
         gameHistoryViewModel.longestStreakLiveData.observe(this) {
-            longestStreakStat.text = it.toString()
+            longestStreakStat.text = it?.toString() ?: "0"
         }
     }
 
@@ -91,9 +90,10 @@ class StatisticsActivity : AppCompatActivity() {
 
     private fun renderCurrentStreak() {
         gameHistoryViewModel.currentStreakLiveData.observe(this) {
-            currentStreakStat.text = it.toString()
+            currentStreakStat.text = it?.toString() ?: "0"
         }
     }
+
     private fun bindUIComponents() {
         totalGamesStat = findViewById(R.id.total_games_played_stat)
         totalScoreStat = findViewById(R.id.total_score_stat)
@@ -103,6 +103,4 @@ class StatisticsActivity : AppCompatActivity() {
         zeroScoreGamesStat = findViewById(R.id.zero_score_games_stat)
         currentStreakStat = findViewById(R.id.currentStreak)
     }
-
-
 }

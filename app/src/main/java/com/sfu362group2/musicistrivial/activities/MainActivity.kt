@@ -10,14 +10,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
+import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -40,8 +44,15 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
     private lateinit var spotify: Spotify
     private lateinit var viewModel: MainViewModel
     private lateinit var todaysScoreMessage: TextView
+    private lateinit var currentGameStreak: TextView
+
     private lateinit var sharedPreferences: SharedPreferences
     private val imgLoaded = AtomicBoolean()
+
+    // use this to access the database
+    private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
+        GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel()
@@ -72,8 +83,10 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         artistImg = findViewById(R.id.artist_image)
 //        artistImg.setImageResource(R.mipmap.ic_launcher)
         artistName = findViewById(R.id.artist_name)
-
-
+        currentGameStreak = findViewById(R.id.game_streak_message)
+        gameHistoryViewModel.currentStreakLiveData.observe(this) {
+            currentGameStreak.text = if ( it!= null) "Current Streak: ${it.toString()}" else "Current Streak: 0"
+        }
     }
 
     override fun onResume() {
