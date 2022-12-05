@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Music is Trivial</string>
+    <string name="SHARED_PREF_KEY">com.sfu362group2.musicistrivial.PREF_FILE_KEY</string>
+    <string name="LAST_PLAYED_DATE_KEY">LAST_PLAYED_DATE</string>
+    <string name="LAST_SCORE_KEY">LAST_SCORE_KEY</string>
+
+    <!--    Spotify  -->
+    <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
+    <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>
+    <string name="spotify_top_tracks_path">/top-tracks?market=CA</string>
+    <string name="spotify_search_url">https://api.spotify.com/v1/search</string>
+
+    <!--    Bundle Keys  -->
+    <string name="bund_key_artist_name">artistName</string>
+    <string name="bund_key_artist_id">artistId</string>
+    <string name="bund_key_date">date</string>
+    <string name="bund_key_all_songs">allSongsInOrder</string>
+    <string name="bund_key_correct_songs">correctSongs</string>
+    <string name="bund_key_detailed_score">detailedScore</string>
+
+    <!--    Buttons        -->
+    <string name="home_button">Home</string>
+    <string name="play_button">Play!</string>
+    <string name="instructions_button">Instructions</string>
+    <string name="stat_button">Statistics</string>
+    <string name="login_w_google_button">Login with Google</string>
+    <string name="clear_selections_button">Clear Selections</string>
+    <string name="submit_button">Submit!</string>
+    <string name="share_to_facebook_button">Share to Facebook</string>
+
+    <!--    MainActivity    -->
+    <string name="todays_artist">Today\'s Artist</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="streak_message">Current Streak: %1$d days</string>
+
+    <!--    GamePlayActivity    -->
+    <string name="gameplay_instruction">Pick their 5 most played songs in order.</string>
+
+    <!--    Game Results   -->
+    <string name="result_message">You got %1$.1f out of 5!\nPlay again tomorrow!</string>
+
+    <!--    Statistics      -->
+    <string name="statistics_title">Statistics</string>
+    <string name="stat_total_games_played">Total Games Played:\ </string>
+    <string name="stat_total_score">Total Score:\ </string>
+    <string name="stat_avg_score">Average Score:\ </string>
+    <string name="stat_perfect_games">Perfect Games:\ </string>
+    <string name="stat_longest_streak">Longest Streak:\ </string>
+    <string name="stat_zero_score_games">Zero Score Games:\ </string>
+
+    <!--    Instructions    -->
+    <string name="instructions_title">Instructions</string>
+    <string name="general_subtitle">General</string>
+    <string name="general_desc">Music is Trivial is a daily game for music lovers. You are prompted with an artist and a list of their most played songs on Spotify. Your goal is to choose the 5 most played songs in the correct order</string>
+    <string name="gameplay_subtitle">Gameplay</string>
+    <string name="gameplay_desc">Tap songs in the order of most played to least played (1 to 5). If you make a mistake, tap Clear Selections and start over. Submit once you have chosen 5 songs.</string>
+    <string name="scoring_subtitle">Scoring</string>
+    <string name="scoring_desc">You get half a point for each chosen song that is in the artist\'s top 5 played songs o Spotify. You get an additional half point if the song is in the correct order.</string>
+
+    <!--    Alert Dialogs   -->
+    <string name="alert_positive">Got It</string>
+    <string name="alert_submission_title">Submission Error</string>
+    <string name="alert_submission_message">Please rank exactly 5 songs, then press submit.</string>
+    <string name="alert_play_title">You have Already Played Today\!</string>
+    <string name="alert_play_message">You can only play once each day\! Play again tomorrow for a different artist\!</string>
+    <string name="alert_network_title">Network Error</string>
+    <string name="alert_network_message">There was an error loading from Spotify\! Please ensure your internet connection is working and restart the app.</string>
+
+</resources>

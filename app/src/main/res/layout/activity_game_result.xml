@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    tools:context=".activities.GamePlayActivity">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_above="@id/buttons"
+                android:orientation="vertical">
+                <!-- Header -->
+                <TextView
+                    android:id="@+id/artist_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/artist_name"
+                    android:theme="@style/title_bold" />
+
+                <TextView
+                    android:id="@+id/game_result_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="debug"
+                    android:layout_marginBottom="15dp"
+                    android:theme="@style/subtitle" />
+                <!-- Song List -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rank_1_song"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="#1 Song"
+                        android:theme="@style/song_bold" />
+                    <TextView
+                        android:id="@+id/rank_2_song"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="#2 Song"
+                        android:theme="@style/song_bold" />
+                    <TextView
+                        android:id="@+id/rank_3_song"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="#3 Song"
+                        android:theme="@style/song_bold" />
+                    <TextView
+                        android:id="@+id/rank_4_song"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="#4 Song"
+                        android:theme="@style/song_bold" />
+                    <TextView
+                        android:id="@+id/rank_5_song"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="#5 Song"
+                        android:theme="@style/song_bold" />
+                </LinearLayout>
+            </LinearLayout>
+            <!-- Buttons -->
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:layout_marginTop="15dp">
+                <Button
+                    android:id="@+id/button_to_home"
+                    android:theme="@style/button_text"
+                    android:backgroundTint="@color/light_purple"
+                    android:text="@string/home_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="60dp"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    android:id="@+id/button_share_to_Facebook"
+                    android:theme="@style/button_text"
+                    android:backgroundTint="@color/dark_purple"
+                    android:text="@string/share_to_facebook_button"
+                    android:layout_width="match_parent"
+                    android:minHeight="60dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+</ScrollView>
