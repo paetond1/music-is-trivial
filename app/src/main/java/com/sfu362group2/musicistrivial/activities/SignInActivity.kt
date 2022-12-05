@@ -1,5 +1,6 @@
 package com.sfu362group2.musicistrivial.activities
 
+import android.app.PendingIntent.getActivity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -9,13 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.games.AchievementsClient
-import com.google.android.gms.games.Games
-import com.google.android.gms.games.LeaderboardsClient
-import com.google.android.gms.games.PlayGames
+import com.google.android.gms.games.*
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.PlayGamesAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,6 +25,7 @@ class SignInActivity : AppCompatActivity() {
     private var achievementClient: AchievementsClient? = null
     private var leaderboardClient: LeaderboardsClient? = null
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var gamesSignInClient: GamesSignInClient
     private lateinit var auth: FirebaseAuth
     private lateinit var signInButton: Button
     private lateinit var leaderboardButton: Button
@@ -54,6 +52,38 @@ class SignInActivity : AppCompatActivity() {
 //        achievementClient?.unlock("id")
 //        leaderboardClient?.submitScore("id", 100)
 
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+            .requestServerAuthCode(getString(R.string.default_web_client_id))
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this,gso)
+
+        signInButton = findViewById(R.id.sign_in_button)
+        signInButton.setOnClickListener {
+//            val signInIntent = googleSignInClient.signInIntent
+//            startActivityForResult(signInIntent, RC_SIGN_IN)
+            initPlayGames()
+
+        }
+
+    }
+
+    private fun initPlayGames() {
+        gamesSignInClient = PlayGames.getGamesSignInClient(this)
+        gamesSignInClient.isAuthenticated.addOnCompleteListener { isAuthenticatedTask: Task<AuthenticationResult> ->
+            val isAuthenticated = isAuthenticatedTask.isSuccessful &&
+                    isAuthenticatedTask.result.isAuthenticated
+            if (isAuthenticated) {
+                // Continue with Play Games Services
+            } else {
+                // Disable your integration with Play Games Services or show a
+                // login button to ask  players to sign-in. Clicking it should
+                // call GamesSignInClient.signIn().
+                PlayGames.getGamesSignInClient(this).signIn();
+            }
+        }
+
     }
 
 
@@ -61,7 +91,7 @@ class SignInActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        println("debug: currents user: ${currentUser?.displayName}")
+        println("debug: currents user: ${currentUser?.displayName.toString()}")
 
     }
 
@@ -84,7 +114,7 @@ class SignInActivity : AppCompatActivity() {
 //        }
         //case play game sign in
 //        const val PG_SIGN_IN = 1002    --- random number code
-        if (requestCode == PG_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN) {
             println("passed PG_SIGN_IN onActivityResult condition check")
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -127,14 +157,14 @@ class SignInActivity : AppCompatActivity() {
 
     //leaderboard show
     private val RC_LEADERBOARD_UI = 9004
-    private fun showLeaderboard() {
+     fun showLeaderboard() {
         PlayGames.getLeaderboardsClient(this)
             .getLeaderboardIntent(getString(R.string.leaderboard_id))
             .addOnSuccessListener { intent -> startActivityForResult(intent, RC_LEADERBOARD_UI) }
     }
     //achievement show
     private val RC_ACHIEVEMENT_UI = 9003
-    private fun showAchievements() {
+    fun showAchievements() {
         PlayGames.getAchievementsClient(this)
             .achievementsIntent
             .addOnSuccessListener { intent -> startActivityForResult(intent, RC_ACHIEVEMENT_UI) }
@@ -144,15 +174,11 @@ class SignInActivity : AppCompatActivity() {
 //    fun signOut(){
 //        Firebase.auth.signOut()
 //    }
-//
+
 //    override fun onDestroy() {
 //        super.onDestroy()
 //        signOut()
 //    }
-
-
-
-
 
 
     companion object {
