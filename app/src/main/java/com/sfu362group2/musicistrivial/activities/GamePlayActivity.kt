@@ -1,6 +1,9 @@
 package com.sfu362group2.musicistrivial.activities
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,9 +17,6 @@ import com.sfu362group2.musicistrivial.MusicTriviaApplication
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.adapters.SongListAdapter
 import com.sfu362group2.musicistrivial.database.GameHistory
-import com.sfu362group2.musicistrivial.database.GameHistoryDb
-import com.sfu362group2.musicistrivial.database.GameHistoryDbDao
-import com.sfu362group2.musicistrivial.database.GameHistoryRepository
 import com.sfu362group2.musicistrivial.game_logic.Game
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
@@ -33,6 +33,8 @@ class GamePlayActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private lateinit var inBundle: Bundle
     private lateinit var viewModel: GamePlayViewModel
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     // use this to access the database
     private val gameHistoryViewModel: GameHistoryViewModel by viewModels {
@@ -52,14 +54,13 @@ class GamePlayActivity : AppCompatActivity() {
 
         // init views
         initViewModel()
+        initSharedPref()
         artistName = findViewById(R.id.artist_name)
         artistName.text = viewModel.game.value?.getArtistName()
         listView = findViewById(R.id.song_listview)
         listViewAdapter = SongListAdapter(this, viewModel.game.value!!.getSongOptions())
         listView.adapter = listViewAdapter
         listView.setOnItemClickListener { parent, view, position, id -> songOnClick(position) }
-
-
     }
 
     private fun initViewModel() {
@@ -80,6 +81,14 @@ class GamePlayActivity : AppCompatActivity() {
 
     }
 
+    private fun initSharedPref() {
+        sharedPreferences = this.getSharedPreferences(
+            getString(R.string.SHARED_PREF_KEY),
+            Context.MODE_PRIVATE
+        )
+        editor = sharedPreferences.edit()
+    }
+
     private fun onClick(view: View) {
         when (view) {
             submitButton -> {
@@ -94,6 +103,10 @@ class GamePlayActivity : AppCompatActivity() {
                         "Detailed Score: ${detailedScore[0]} ${detailedScore[1]} ${detailedScore[2]} ${detailedScore[3]} ${detailedScore[4]}"
                     )
                     gameHistoryViewModel.insertEntry(entry)
+                    editor.apply {
+                        putLong(getString(R.string.LAST_PLAYED_DATE_KEY), entry.date!!)
+                        putFloat(getString(R.string.LAST_SCORE_KEY), entry.score)
+                    }.apply()
                     val outBundle = Bundle()
                     outBundle.putString(
                         getString(R.string.bund_key_artist_name),
@@ -113,7 +126,7 @@ class GamePlayActivity : AppCompatActivity() {
                     startActivity(i)
                     finish()
                 } else {
-                    // TODO Error Dialog for not enough songs ranked
+                    alertNotEnoughSelections()
                 }
             }
             clearButton -> {
@@ -144,5 +157,13 @@ class GamePlayActivity : AppCompatActivity() {
         listViewAdapter.notifyDataSetChanged()
     }
 
+    private fun alertNotEnoughSelections() {
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogCustom)
+        builder.setTitle(getString(R.string.alert_submission_title))
+        builder.setMessage(getString(R.string.alert_submission_message))
+        builder.setPositiveButton(getString(R.string.alert_positive)) { _, _ ->
+        }
+        builder.show()
+    }
 
 }

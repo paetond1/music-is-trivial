@@ -1,11 +1,7 @@
 package com.sfu362group2.musicistrivial.database
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 class GameHistoryRepository(private val gameHistoryDbDao: GameHistoryDbDao) {
     val allEntries: Flow<List<GameHistory>> = gameHistoryDbDao.getAllEntries()

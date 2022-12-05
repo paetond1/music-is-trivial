@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Music is Trivial</string>
+    <string name="SHARED_PREF_KEY">com.sfu362group2.musicistrivial.PREF_FILE_KEY</string>
+    <string name="LAST_PLAYED_DATE_KEY">LAST_PLAYED_DATE</string>
+    <string name="LAST_SCORE_KEY">LAST_SCORE_KEY</string>
 
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
@@ -28,7 +31,7 @@
     <!--    MainActivity    -->
     <string name="todays_artist">Today\'s Artist</string>
     <string name="artist_name">Artist Name</string>
-    <string name="default_streak_message">Current Streak: 0 days</string>
+    <string name="streak_message">Current Streak: %1$d days</string>
 
     <!--    GamePlayActivity    -->
     <string name="gameplay_instruction">Pick their 5 most played songs in order.</string>
@@ -53,6 +56,15 @@
     <string name="gameplay_desc">Tap songs in the order of most played to least played (1 to 5). If you make a mistake, tap Clear Selections and start over. Submit once you have chosen 5 songs.</string>
     <string name="scoring_subtitle">Scoring</string>
     <string name="scoring_desc">You get half a point for each chosen song that is in the artist\'s top 5 played songs o Spotify. You get an additional half point if the song is in the correct order.</string>
+
+    <!--    Alert Dialogs   -->
+    <string name="alert_positive">Got It</string>
+    <string name="alert_submission_title">Submission Error</string>
+    <string name="alert_submission_message">Please rank exactly 5 songs, then press submit.</string>
+    <string name="alert_play_title">You have Already Played Today\!</string>
+    <string name="alert_play_message">You can only play once each day\! Play again tomorrow for a different artist\!</string>
+    <string name="alert_network_title">Network Error</string>
+    <string name="alert_network_message">There was an error loading from Spotify\! Please ensure your internet connection is working and restart the app.</string>
 
 
     <!-- game service -->
