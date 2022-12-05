@@ -1,82 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_margin="15dp"
     tools:context=".activities.GamePlayActivity">
-
-    <TextView
-        android:id="@+id/artist_name"
-        android:text="Artist Name"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"/>
-    <TextView
-        android:id="@+id/pick_5_songs_message"
-        android:text="Pick their 5 most played songs in order."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="50dp"/>
-    <!--TODO: Will have a ListView and adapter for the list of songs-->
-    <TextView
-        android:id="@+id/test_song_1"
-        android:text="Test Song 1"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-    <TextView
-        android:id="@+id/test_song_2"
-        android:text="Test Song 2"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-    <TextView
-        android:id="@+id/test_song_3"
-        android:text="Test Song 3"
-        android:background="@color/purple_200"
-        android:textSize="30dp"
-        android:focusable="true"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"/>
-
     <LinearLayout
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
-
-        <Button
-            android:id="@+id/button_clear_selections"
-            android:text="Clear Selections"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <!-- Header + Song List -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/artist_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/artist_name"
+                android:theme="@style/title_bold" />
+            <TextView
+                android:id="@+id/pick_5_songs_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal"
+                android:text="@string/gameplay_instruction"
+                android:theme="@style/subtitle"/>
+            <ListView
+                android:id="@+id/song_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+        <!-- Buttons -->
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"/>
-        <Button
-            android:id="@+id/button_submit"
-            android:text="Submit!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"/>
-
+            android:layout_weight="0"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/button_clear_selections"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="@string/clear_selections_button"
+                android:theme="@style/button_text"
+                android:backgroundTint="@color/greyed_out"/>
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/submit_button"
+                android:theme="@style/button_text"
+                android:backgroundTint="@color/light_purple"/>
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
