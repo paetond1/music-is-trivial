@@ -64,8 +64,11 @@ class SignInActivity : AppCompatActivity() {
 //            val signInIntent = googleSignInClient.signInIntent
 //            startActivityForResult(signInIntent, RC_SIGN_IN)
             initPlayGames()
-
         }
+
+    }
+
+    private fun unlock(){
 
     }
 
