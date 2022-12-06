@@ -18,10 +18,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.sfu362group2.musicistrivial.MusicTriviaApplication
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseAuth
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.api.Spotify
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModel
 import com.sfu362group2.musicistrivial.view_models.GameHistoryViewModelFactory
+import com.sfu362group2.musicistrivial.databinding.ActivityMainBinding
 import com.sfu362group2.musicistrivial.view_models.MainViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
         GameHistoryViewModelFactory((application as MusicTriviaApplication).gameHistoryRepository)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel()
         initSharedPref()
@@ -79,6 +83,14 @@ class MainActivity : AppCompatActivity(), SplashScreen.KeepOnScreenCondition {
             val i = Intent(this, StatisticsActivity::class.java)
             startActivity(i)
         }
+
+        //google
+        loginButton = findViewById(R.id.button_login_with_google)
+        loginButton.setOnClickListener{
+            val i = Intent(this, SignInActivity::class.java)
+            startActivity(i)
+        }
+        //end google
 
         artistImg = findViewById(R.id.artist_image)
 //        artistImg.setImageResource(R.mipmap.ic_launcher)

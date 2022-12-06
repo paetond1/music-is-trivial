@@ -19,6 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicIsTrivial"
         tools:targetApi="31">
+
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id"/>
+
+        <activity
+            android:name=".activities.SignInActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/FB_APP_ID"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/FB_CLIENT_TOKEN"/>
         <provider android:authorities="@string/FB_PROVIDER"
