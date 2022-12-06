@@ -1,5 +1,6 @@
 # Built application files
 *.apk
+!music-is-trivial.apk
 *.aar
 *.ap_
 *.aab
