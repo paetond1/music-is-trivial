@@ -1,6 +1,5 @@
 package com.sfu362group2.musicistrivial.activities
 
-import android.app.PendingIntent.getActivity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.games.*
@@ -20,6 +20,18 @@ import com.sfu362group2.musicistrivial.R
 
 
 class SignInActivity : AppCompatActivity() {
+    /*
+    leaderboard_id:
+    CgkIneOJnqgREAIQAg
+
+
+    achievements ID:
+    CgkIneOJnqgREAIQBA  25
+    CgkIneOJnqgREAIQAw  35
+    CgkIneOJnqgREAIQBQ  45
+    CgkIneOJnqgREAIQBg  55
+    CgkIneOJnqgREAIQBw  65
+     */
 
 
     private var achievementClient: AchievementsClient? = null
@@ -65,11 +77,33 @@ class SignInActivity : AppCompatActivity() {
 //            startActivityForResult(signInIntent, RC_SIGN_IN)
             initPlayGames()
         }
+        signInButton.isVisible = false
+
+        // functions for submit and update scores
+//        reach25points()
 
     }
 
-    private fun unlock(){
-
+    // functions for submit and update scores
+    fun reach25points() {
+        achievementClient?.unlock("CgkIneOJnqgREAIQBA")
+        leaderboardClient?.submitScore("CgkIneOJnqgREAIQAg", 25)
+    }
+    fun reach35points() {
+        achievementClient?.unlock("CgkIneOJnqgREAIQAw")
+        leaderboardClient?.submitScore("CgkIneOJnqgREAIQAg", 35)
+    }
+    fun reach45points() {
+        achievementClient?.unlock("CgkIneOJnqgREAIQBQ")
+        leaderboardClient?.submitScore("CgkIneOJnqgREAIQAg", 45)
+    }
+    fun reach55points() {
+        achievementClient?.unlock("CgkIneOJnqgREAIQBg")
+        leaderboardClient?.submitScore("CgkIneOJnqgREAIQAg", 55)
+    }
+    fun reach65points() {
+        achievementClient?.unlock("CgkIneOJnqgREAIQBw")
+        leaderboardClient?.submitScore("CgkIneOJnqgREAIQAg", 65)
     }
 
     private fun initPlayGames() {
@@ -89,14 +123,6 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        println("debug: currents user: ${currentUser?.displayName.toString()}")
-
-    }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,24 +199,10 @@ class SignInActivity : AppCompatActivity() {
             .addOnSuccessListener { intent -> startActivityForResult(intent, RC_ACHIEVEMENT_UI) }
     }
 
-    //sign out
-//    fun signOut(){
-//        Firebase.auth.signOut()
-//    }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        signOut()
-//    }
-
 
     companion object {
-        //code for google sign in
+        //code for play game sign in
         const val RC_SIGN_IN = 1001
-
-        //code for play games sign in
-        const val PG_SIGN_IN = 1002
-        const val EXTRA_NAME = "EXTRA NAME"
     }
 
 
