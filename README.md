@@ -12,6 +12,8 @@ Music is Trivial is an Android trivia game app to be played once a day just like
 * [**Show and Tell 1**](https://youtu.be/Q_0CcpiQyOk)
 * [**Show and Tell 2**](https://www.youtube.com/watch?v=XXoiEawpZss)
 * [Threading Diagram](https://docs.google.com/presentation/d/1_73l_FN74rvnzgC2XM60nbXAgu9R69Dn1lbByXkNczc/edit?usp=sharing)
+* [APK](https://github.com/paetond1/music-is-trivial/blob/main/music-is-trivial.apk)
+* Project Zip is only submitted through Canvas due to API key security
 
 ## Work Division
 * Abay Kulamkadyr - Room Database, Statistics, Facebook integration
@@ -20,9 +22,12 @@ Music is Trivial is an Android trivia game app to be played once a day just like
 * Peter Fan - UI/UX, Facebook integration
 
 ## Installation
- 1. Clone this repository
- 2. Open the project with Android Studio
- 3. Build the project and run with an your android device
+ 1. Download the [APK](https://github.com/paetond1/music-is-trivial/blob/main/music-is-trivial.apk) and install the APK to your device
+ 2. Alternatively, donwload the Android Studio Project zip submitted to Canvas.
+ 
+ ## Special Instructions
+ * Our Spotify API key is not shared on Github because our source code is required to be public. Thus we also have no public link to a project zip file. If you want to build the project from Android Studio, please do so from the zipped project file submitted on Canvas.
+ * If you'd like to test the "Share to Facebook" feature, you need to use a test Facebook account. Unfortunately Facebook does not allow sharing to real Facebook accounts from unpublished apps, but they do allow it with test Facebook accounts. To test this feature, log into Facebook on your device with the login credentials shared in the README of the submitted zip project file found on Canvas.
 
 ### Requirements
 Minimum SDK verision 26
