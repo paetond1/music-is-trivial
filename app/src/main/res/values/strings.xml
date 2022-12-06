@@ -4,6 +4,10 @@
     <string name="LAST_PLAYED_DATE_KEY">LAST_PLAYED_DATE</string>
     <string name="LAST_SCORE_KEY">LAST_SCORE_KEY</string>
 
+    <!-- Facebook -->
+    <string name="FB_APP_ID">870512360634888</string>
+    <string name="FB_CLIENT_TOKEN">f0dc7022e0ace17212cde4024a3b67b4</string>
+    <string name="FB_PROVIDER">com.facebook.app.FacebookContentProvider870512360634888</string>
     <!--    Spotify  -->
     <string name="spotify_token_url">https://accounts.spotify.com/api/token</string>
     <string name="spotify_artist_url">https://api.spotify.com/v1/artists/</string>
@@ -34,7 +38,7 @@
     <string name="streak_message">Current Streak: %1$d days</string>
 
     <!--    GamePlayActivity    -->
-    <string name="gameplay_instruction">Pick their 5 most played songs in order.</string>
+    <string name="gameplay_instruction">Pick their 5 most popular songs in order\!</string>
 
     <!--    Game Results   -->
     <string name="result_message">You got %1$.1f out of 5!\nPlay again tomorrow!</string>
@@ -51,17 +55,17 @@
     <!--    Instructions    -->
     <string name="instructions_title">Instructions</string>
     <string name="general_subtitle">General</string>
-    <string name="general_desc">Music is Trivial is a daily game for music lovers. You are prompted with an artist and a list of their most played songs on Spotify. Your goal is to choose the 5 most played songs in the correct order</string>
+    <string name="general_desc">Music is Trivial is a daily game for music lovers. You are prompted with an artist and a list of their most played songs on Spotify. Your goal is to choose the 5 most popular songs in the correct order, as determined by Spotify popularity.</string>
     <string name="gameplay_subtitle">Gameplay</string>
-    <string name="gameplay_desc">Tap songs in the order of most played to least played (1 to 5). If you make a mistake, tap Clear Selections and start over. Submit once you have chosen 5 songs.</string>
+    <string name="gameplay_desc">Tap five songs in the order of most popular to least popular (1 to 5). If you make a mistake, tap Clear Selections and start over. Submit once you have chosen 5 songs.</string>
     <string name="scoring_subtitle">Scoring</string>
-    <string name="scoring_desc">You get half a point for each chosen song that is in the artist\'s top 5 played songs o Spotify. You get an additional half point if the song is in the correct order.</string>
+    <string name="scoring_desc">You get half a point for each chosen song that is in the artist\'s top 5 most popular songs on Spotify. You get an additional half point if the song is in the correct order.</string>
 
     <!--    Alert Dialogs   -->
     <string name="alert_positive">Got It</string>
     <string name="alert_submission_title">Submission Error</string>
     <string name="alert_submission_message">Please rank exactly 5 songs, then press submit.</string>
-    <string name="alert_play_title">You have Already Played Today\!</string>
+    <string name="alert_play_title">You have already played today\!</string>
     <string name="alert_play_message">You can only play once each day\! Play again tomorrow for a different artist\!</string>
     <string name="alert_network_title">Network Error</string>
     <string name="alert_network_message">There was an error loading from Spotify\! Please ensure your internet connection is working and restart the app.</string>

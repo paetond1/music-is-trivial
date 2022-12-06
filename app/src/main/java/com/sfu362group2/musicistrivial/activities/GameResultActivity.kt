@@ -1,13 +1,22 @@
 package com.sfu362group2.musicistrivial.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.facebook.CallbackManager
+import com.facebook.share.model.ShareHashtag
+import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.model.SharePhoto
+import com.facebook.share.model.SharePhotoContent
+import com.facebook.share.widget.ShareDialog
 import com.sfu362group2.musicistrivial.R
 import com.sfu362group2.musicistrivial.view_models.GameResultViewModel
+
 
 class GameResultActivity : AppCompatActivity() {
 
@@ -19,9 +28,11 @@ class GameResultActivity : AppCompatActivity() {
     private lateinit var song4: TextView
     private lateinit var song5: TextView
     private lateinit var homeButton: Button
+    private lateinit var gameResultView: View
     private lateinit var shareToFbButton: Button
+    private lateinit var shareDialog: ShareDialog
+    private lateinit var callbackManager: CallbackManager
     private lateinit var inBundle: Bundle
-
     private lateinit var viewModel: GameResultViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +46,15 @@ class GameResultActivity : AppCompatActivity() {
             finish()
         }
 
+        // Facebook ShareDialog
+        callbackManager = CallbackManager.Factory.create()
+        shareDialog = ShareDialog(this)
+
         shareToFbButton = findViewById(R.id.button_share_to_Facebook)
+        shareToFbButton.setOnClickListener { shareToFacebook() }
+
 
     }
-
     private fun initTextViews(){
         artistName = findViewById(R.id.artist_name)
         gameResult = findViewById(R.id.game_result_message)
@@ -99,5 +115,32 @@ class GameResultActivity : AppCompatActivity() {
         }
     }
 
+    private fun shareToFacebook() {
+        if (ShareDialog.canShow(ShareLinkContent::class.java)) {
+            gameResultView = findViewById(R.id.game_result_view)
+            val screenBitmap = getBitmapFromView(gameResultView)
+            val sharePhoto = SharePhoto.Builder().setBitmap(screenBitmap).build()
+            val shareContent = SharePhotoContent.Builder()
+                .addPhoto(sharePhoto)
+                .setShareHashtag( ShareHashtag.Builder()
+                    .setHashtag("#MusicIsTrivialApp")
+                    .build()
+                )
+                .build()
+            shareDialog.show(shareContent)
+        }
+    }
 
+    private fun getBitmapFromView(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val drawable = view.background
+        if (drawable != null) {
+            drawable.draw(canvas)
+        } else {
+            canvas.drawColor(getColor(R.color.white))
+        }
+        view.draw(canvas)
+        return bitmap
+    }
 }

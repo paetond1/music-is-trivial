@@ -6,6 +6,11 @@ plugins {
 
     //for the room database kapt
     id "org.jetbrains.kotlin.kapt"
+
+    //for hiding API keys
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+
+    //for play games
     id 'com.google.gms.google-services'
 }
 
@@ -84,4 +89,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    // Facebook Sharing SDK
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    implementation 'com.facebook.android:facebook-share:latest.release'
 }
