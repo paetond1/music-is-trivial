@@ -11,6 +11,7 @@ Music is Trivial is an Android trivia game app to be played once a day just like
 * [Project Pitch](https://youtu.be/lnMhmHPjxhY)
 * [Show and Tell 1](https://youtu.be/Q_0CcpiQyOk)
 * [Show and Tell 2](https://www.youtube.com/watch?v=XXoiEawpZss)
+* [Final Presentation](https://youtu.be/FJsHOyJpJfQ)
 * [Threading Diagram](https://docs.google.com/presentation/d/1_73l_FN74rvnzgC2XM60nbXAgu9R69Dn1lbByXkNczc/edit?usp=sharing)
 * [APK](https://github.com/paetond1/music-is-trivial/blob/main/music-is-trivial.apk)
 * Project Zip is only submitted through Canvas due to API key security
